@@ -1,47 +1,82 @@
-<laravel-boost-guidelines>
-# Laravel Application
+# MaintenanceConnect — Instructions pour l'Agent
 
-This repository contains a Laravel application. Complete the following setup before working on the user's request.
+## Stack
 
-## Prerequisites
+- Laravel 13 · PHP 8.3
+- Base de données : MySQL
+- Frontend : Blade
+- CSS : Tailwind CSS
+- Données de test : factories + seeders
 
-Verify that PHP and Composer are available:
+## Structure
 
-```sh
-php -v
-composer -V
-```
+- Contrôleurs : `app/Http/Controllers`
+- Modèles : `app/Models`
+- Migrations : `database/migrations`
+- Factories : `database/factories`
+- Seeders : `database/seeders`
+- Routes : `routes/web.php`
+- Vues : `resources/views`
+- Form Requests : `app/Http/Requests`
+- Policies : `app/Policies`
 
-If either command is unavailable, detect the user's operating system and install the prerequisites with the appropriate command:
+## Le domaine
 
-macOS:
+MaintenanceConnect est une plateforme de mise en relation entre
+entreprises industrielles et techniciens de maintenance freelances.
 
-```sh
-/bin/bash -c "$(curl -fsSL https://php.new/install/mac/8.5)"
-```
+Les acteurs principaux sont :
 
-Windows PowerShell:
+- Administrateur
+- Entreprise
+- Technicien
 
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://php.new/install/windows/8.5'))
-```
+Une entreprise peut publier plusieurs missions.
 
-Linux:
+Une mission appartient à une seule entreprise.
 
-```sh
-/bin/bash -c "$(curl -fsSL https://php.new/install/linux/8.5)"
-```
+Une mission peut recevoir plusieurs offres.
 
-After installation, ask the user to restart their terminal. If the agent needs the restarted shell to continue, ask the user to reopen their terminal and rerun their original prompt.
+Une offre appartient à une seule mission et à un seul technicien.
 
-## Agent Setup
+Une entreprise peut accepter une seule offre pour une mission.
 
-Install Laravel Boost from the application root before making application changes:
+Une mission peut être : publiée, en attente, affectée, en cours,
+terminée ou annulée.
 
-```sh
-composer require laravel/boost --dev
-php artisan boost:install
-```
+## Authentification
 
-Boost replaces these bootstrap instructions with guidelines tailored to the application. After installation, read `AGENTS.md` again and continue with the user's original request using the generated guidelines.
-</laravel-boost-guidelines>
+- Utiliser l'authentification Laravel.
+- Permettre l'inscription, la connexion et la déconnexion.
+- Ne pas créer un système d'authentification personnalisé sans nécessité.
+- Respecter la structure Laravel existante.
+
+## Autorisation
+
+- Respecter les rôles : `admin`, `entreprise`, `technicien`.
+- Un utilisateur ne doit accéder qu'aux fonctionnalités autorisées
+  par son rôle.
+- Utiliser les Policies ou Middleware Laravel pour contrôler les accès.
+
+## Conventions
+
+- Utiliser Eloquent pour l'accès aux données.
+- Utiliser les relations Eloquent définies dans les Models.
+- Valider les données avec des Form Requests.
+- Utiliser des migrations pour toute modification de la base de données.
+- Garder les Controllers simples et respecter MVC.
+- Réutiliser les vues Blade existantes.
+- Les textes, labels et messages doivent être en français.
+
+## Interdits
+
+- Ne pas inventer de fonctionnalités non définies dans le projet.
+- Ne pas inventer de champs, tables ou relations.
+- Ne pas modifier le MCD/MLD sans demande explicite.
+- Ne pas modifier le schéma de la base sans migration.
+- Ne pas supprimer une fonctionnalité existante sans demande.
+- Ne pas ajouter de package sans raison claire.
+- Ne pas utiliser React, Vue ou une autre SPA.
+- Ne pas utiliser de SQL brut si Eloquent suffit.
+- Ne pas modifier plusieurs parties du projet sans nécessité.
+- Si une information manque, demander confirmation au lieu de supposer.
