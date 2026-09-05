@@ -4,6 +4,12 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Support\Facades\Gate;
+use App\Models\Mission;
+use App\Models\Offre;
+use App\Policies\MissionPolicy;
+use App\Policies\OffrePolicy;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::policy(Mission::class, MissionPolicy::class);
+        Gate::policy(Offre::class, OffrePolicy::class);
+
+        Gate::define('isAdmin', fn($user) => $user->role === 'Admin');
+        Gate::define('isEntreprise', fn($user) => $user->role === 'Entreprise');
+        Gate::define('isTechnicien', fn($user) => $user->role === 'Technicien');
     }
 }

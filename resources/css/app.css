@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	html {
+		@apply bg-[#f4f7fa];
+	}
+
+	body {
+		@apply antialiased;
+		font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+	}
+
+	::selection {
+		@apply bg-sky-200 text-slate-900;
+	}
+}
+
+@layer components {
+	.mc-panel {
+		@apply rounded-2xl border border-slate-200 bg-white shadow-[0_12px_32px_rgba(15,23,42,0.05)];
+	}
+
+	.mc-input {
+		@apply rounded-lg border-slate-300 text-sm shadow-sm transition focus:border-sky-600 focus:ring-sky-600;
+	}
+}
