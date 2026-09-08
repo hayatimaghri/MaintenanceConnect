@@ -331,7 +331,7 @@
 
 
                         <!-- FORM -->
-                        <form method="POST"
+                        <form x-data="{ submitting: false }" @submit="submitting = true" method="POST"
                               action="{{ route('register') }}"
                               class="space-y-5">
 
@@ -656,6 +656,7 @@
                             <button
                                 type="submit"
 
+                                :disabled="submitting"
                                 class="w-full py-3.5 px-5
                                        bg-[#0f4c81]
                                        hover:bg-[#0b3b65]
@@ -667,9 +668,8 @@
                                        shadow-sm
                                        hover:shadow-md">
 
-                                <i class="fa-solid fa-user-plus mr-2"></i>
-
-                                Créer mon compte
+                                <span x-show="!submitting"><i class="fa-solid fa-user-plus mr-2"></i>Créer mon compte</span>
+                                <span x-cloak x-show="submitting">Création en cours...</span>
 
                             </button>
 

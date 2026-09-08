@@ -22,8 +22,8 @@ class OffrePolicy
         return $user->role === 'Entreprise' && $offre->mission->id_utilisateur === $user->id;
     }
 
-    public function create(User $user)
-    {
-        return $user->role === 'Admin' || $user->role === 'Technicien';
-    }
+   public function create(User $user)
+{
+    return $user->role === 'Technicien';
+}
 }

@@ -7,18 +7,27 @@ use App\Models\Mission;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Gate;
 
 class MissionController extends Controller
 {
    public function index(): View
-{
-    $missions = Mission::all();
-
-    return view('missions.index', compact('missions'));
-}
-
-    public function create(): View
     {
+        Gate::authorize('viewAny', Mission::class);
+
+        $missions = Mission::with('user')->latest()->get();
+
+        return view('missions.index', compact('missions'));
+    }
+
+    public function create(): View|RedirectResponse
+    {
+        if (! auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        Gate::authorize('create', Mission::class);
+
         return view('missions.create');
     }
 
@@ -30,11 +39,7 @@ class MissionController extends Controller
 
         $user = auth()->user();
 
-        if ($user->role !== 'Admin' && $user->role !== 'Entreprise') {
-            throw new AuthorizationException('Unauthorized.');
-        }
-
-        $this->authorize('create', Mission::class);
+        Gate::authorize('create', Mission::class);
 
         Mission::create([
             'localisation' => $request->localisation,
@@ -42,7 +47,7 @@ class MissionController extends Controller
             'description' => $request->description,
             'budget' => $request->budget,
             'priorite' => $request->priorite,
-            'statut' => $request->statut,
+            'statut' => 'Publiée',
             'date_publication' => $request->date_publication,
             'date_limite' => $request->date_limite,
             'id_utilisateur' => $user->id,
@@ -53,7 +58,11 @@ class MissionController extends Controller
 
     public function show(Mission $mission): View
     {
-        return view('missions.show', ['mission' => $mission]);
+        Gate::authorize('view', $mission);
+
+        $mission->load(['user', 'offres.user', 'evaluation']);
+
+        return view('missions.show', compact('mission'));
     }
 
     public function update(MissionRequest $request, Mission $mission): RedirectResponse
@@ -62,7 +71,7 @@ class MissionController extends Controller
             return redirect()->route('login');
         }
 
-        $this->authorize('update', $mission);
+        Gate::authorize('update', $mission);
 
         $mission->update($request->only([
             'localisation', 'titre', 'description', 'budget',
@@ -78,7 +87,7 @@ class MissionController extends Controller
             return redirect()->route('login');
         }
 
-        $this->authorize('delete', $mission);
+        Gate::authorize('delete', $mission);
 
         $mission->delete();
 

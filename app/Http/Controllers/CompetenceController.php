@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCompetenceRequest;
+use App\Models\Competence;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\View\View;
@@ -18,8 +19,12 @@ class CompetenceController extends Controller
         }
 
         $competences = $user->competences()->get();
+        $competencesDisponibles = Competence::query()
+            ->whereNotIn('id_competence', $competences->modelKeys())
+            ->orderBy('nom')
+            ->get();
 
-        return view('competences.index', compact('competences'));
+        return view('competences.index', compact('competences', 'competencesDisponibles'));
     }
 
     public function store(StoreCompetenceRequest $request): RedirectResponse

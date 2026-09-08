@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCompetenceRequest extends FormRequest
 {
@@ -12,7 +13,13 @@ class StoreCompetenceRequest extends FormRequest
             'id_competence' => [
                 'required',
                 'integer',
-                'exists:competences,id_competence',
+                Rule::exists('competences', 'id_competence'),
+                Rule::notIn(
+                    auth()->user()
+                        ->competences()
+                        ->pluck('competences.id_competence')
+                        ->all()
+                ),
             ],
         ];
     }

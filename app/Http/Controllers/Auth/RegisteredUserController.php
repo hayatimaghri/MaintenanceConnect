@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Http\Controllers\Auth;
@@ -16,17 +15,12 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): View
     {
         return view('auth.register');
     }
 
     /**
-     * Handle an incoming registration request.
-     *
      * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
@@ -39,16 +33,16 @@ class RegisteredUserController extends Controller
                 'lowercase',
                 'email',
                 'max:255',
-                'unique:' . User::class
+                'unique:' . User::class,
             ],
             'password' => [
                 'required',
                 'confirmed',
-                Rules\Password::defaults()
+                Rules\Password::defaults(),
             ],
             'role' => [
                 'required',
-                'in:Entreprise,Technicien'
+                'in:Entreprise,Technicien',
             ],
         ]);
 
@@ -66,4 +60,3 @@ class RegisteredUserController extends Controller
         return redirect(route('dashboard', absolute: false));
     }
 }
-

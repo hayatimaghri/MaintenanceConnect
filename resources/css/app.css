@@ -12,6 +12,10 @@
 		font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
 	}
 
+	[x-cloak] {
+		display: none !important;
+	}
+
 	::selection {
 		@apply bg-sky-200 text-slate-900;
 	}
@@ -23,6 +27,31 @@
 	}
 
 	.mc-input {
-		@apply rounded-lg border-slate-300 text-sm shadow-sm transition focus:border-sky-600 focus:ring-sky-600;
+		@apply block w-full rounded-lg border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-800 shadow-sm transition placeholder:text-slate-400 hover:border-slate-400 focus:border-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-600/20 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-500;
+	}
+
+	.mc-label {
+		@apply block text-sm font-semibold text-slate-700;
+	}
+
+	.mc-help {
+		@apply mt-1.5 text-xs leading-5 text-slate-500;
+	}
+
+	.mc-error {
+		@apply mt-1.5 text-sm font-medium text-rose-600;
+	}
+
+	.mc-form-section {
+		@apply border-b border-slate-100 pb-6;
+	}
+
+	.mc-form-section:last-child {
+		@apply border-b-0 pb-0;
+	}
+
+	.mc-required::after {
+		content: ' *';
+		@apply text-rose-600;
 	}
 }

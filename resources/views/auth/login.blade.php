@@ -292,7 +292,7 @@
 
 
                             <!-- LOGIN FORM -->
-                            <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                            <form x-data="{ submitting: false }" @submit="submitting = true" method="POST" action="{{ route('login') }}" class="space-y-6">
 
                                 @csrf
 
@@ -436,6 +436,7 @@
                                 <button
                                     type="submit"
 
+                                    :disabled="submitting"
                                     class="w-full py-3.5 px-5
                                            bg-[#0f4c81]
                                            hover:bg-[#0b3b65]
@@ -447,9 +448,8 @@
                                            shadow-sm
                                            hover:shadow-md">
 
-                                    <i class="fa-solid fa-right-to-bracket mr-2"></i>
-
-                                    Se connecter
+                                    <span x-show="!submitting"><i class="fa-solid fa-right-to-bracket mr-2"></i>Se connecter</span>
+                                    <span x-cloak x-show="submitting">Connexion...</span>
 
                                 </button>
 

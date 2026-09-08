@@ -13,7 +13,7 @@ class MissionRequest extends FormRequest
             'titre' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'budget' => ['required', 'numeric', 'min:0'],
-            'priorite' => ['string'],
+            'priorite' => ['required', 'string', 'in:Faible,Moyenne,Haute'],
             'statut' => ['string'],
             'date_publication' => ['required', 'date'],
             'date_limite' => ['required', 'date'],

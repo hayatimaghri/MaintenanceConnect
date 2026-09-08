@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
-use App\Models\mission;
+use App\Models\Mission;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Offre extends Model
 {

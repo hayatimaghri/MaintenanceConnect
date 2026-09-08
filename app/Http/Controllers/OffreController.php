@@ -7,10 +7,11 @@ use App\Models\Offre;
 use App\Models\Mission;
 
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class OffreController extends Controller
 {
+        use AuthorizesRequests;
     public function store(OffreRequest $request): RedirectResponse
     {
         if (! auth()->check()) {
@@ -19,9 +20,6 @@ class OffreController extends Controller
 
         $user = auth()->user();
 
-        if (! ($user->role === 'Admin' || $user->role === 'Technicien')) {
-            throw new AuthorizationException('Unauthorized to submit an offer.');
-        }
 
         $this->authorize('create', Offre::class);
 
