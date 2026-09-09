@@ -38,8 +38,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('missions/{mission}', [MissionController::class, 'destroy'])->name('missions.destroy');
 
     Route::post('offres', [OffreController::class, 'store'])->name('offres.store');
+    Route::get('offres/{offre}/edit', [OffreController::class, 'edit'])->name('offres.edit');
+    Route::put('offres/{offre}', [OffreController::class, 'update'])->name('offres.update');
+    Route::delete('offres/{offre}', [OffreController::class, 'destroy'])->name('offres.destroy');
     Route::put('offres/{offre}/accept', [OffreController::class, 'accept'])->name('offres.accept');
-
+Route::put('offres/{offre}/refuse', [OffreController::class, 'refuse'])
+    ->name('offres.refuse');
     Route::get('technicien/experiences', [ExperienceController::class, 'index'])
     ->name('experiences.index');
 
@@ -55,5 +59,11 @@ Route::delete('technicien/experiences/{experience}', [ExperienceController::clas
     Route::post('missions/{mission}/evaluations', [EvaluationController::class, 'store'])
     ->name('evaluations.store');
 });
+
+Route::post('/notifications/{notification}/read', function ($notification) {
+    session()->put("notification_read_{$notification}", true);
+
+    return back();
+})->middleware('auth')->name('notifications.read');
 
 require __DIR__.'/auth.php';

@@ -14,7 +14,7 @@ class MissionRequest extends FormRequest
             'description' => ['required', 'string'],
             'budget' => ['required', 'numeric', 'min:0'],
             'priorite' => ['required', 'string', 'in:Faible,Moyenne,Haute'],
-            'statut' => ['string'],
+           
             'date_publication' => ['required', 'date'],
             'date_limite' => ['required', 'date'],
         ];

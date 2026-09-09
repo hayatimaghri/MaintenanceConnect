@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MissionRequest;
 use App\Models\Mission;
+use App\Events\NewOfferReceived;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -15,9 +16,20 @@ class MissionController extends Controller
     {
         Gate::authorize('viewAny', Mission::class);
 
-        $missions = Mission::with('user')->latest()->get();
+        $search = request('search');
 
-        return view('missions.index', compact('missions'));
+        $missions = Mission::with('user')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('titre', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('localisation', 'like', "%{$search}%");
+                });
+            })
+            ->latest()
+            ->get();
+
+        return view('missions.index', compact('missions', 'search'));
     }
 
     public function create(): View|RedirectResponse
@@ -73,10 +85,15 @@ class MissionController extends Controller
 
         Gate::authorize('update', $mission);
 
-        $mission->update($request->only([
-            'localisation', 'titre', 'description', 'budget',
-            'priorite', 'statut', 'date_publication', 'date_limite'
-        ]));
+       $mission->update($request->only([
+    'localisation',
+    'titre',
+    'description',
+    'budget',
+    'priorite',
+    'date_publication',
+    'date_limite'
+]));
 
         return redirect()->route('missions.show', $mission->id_mission)->with('status', 'Mission updated');
     }

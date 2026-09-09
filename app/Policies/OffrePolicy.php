@@ -7,23 +7,54 @@ use App\Models\Offre;
 
 class OffrePolicy
 {
-    public function viewAny(User $user)
+    public function viewAny(User $user): bool
     {
-        return $user->role === 'Admin' || $user->role === 'Entreprise' || $user->role === 'Technicien';
+        return in_array($user->role, [
+            'Admin',
+            'Entreprise',
+            'Technicien'
+        ]);
     }
 
-    public function view(User $user, Offre $offre)
+    public function view(User $user, Offre $offre): bool
     {
-        return $user->role === 'Admin' || $user->role === 'Entreprise' || $user->role === 'Technicien';
+        return in_array($user->role, [
+            'Admin',
+            'Entreprise',
+            'Technicien'
+        ]);
     }
 
-    public function accept(User $user, Offre $offre)
+    public function create(User $user): bool
     {
-        return $user->role === 'Entreprise' && $offre->mission->id_utilisateur === $user->id;
+        return $user->role === 'Technicien';
     }
 
-   public function create(User $user)
-{
-    return $user->role === 'Technicien';
-}
+    public function update(User $user, Offre $offre): bool
+    {
+        return $user->role === 'Technicien'
+            && $offre->id_utilisateur === $user->id
+            && $offre->statut === 'en_attente';
+    }
+
+    public function delete(User $user, Offre $offre): bool
+    {
+        return $user->role === 'Technicien'
+            && $offre->id_utilisateur === $user->id
+            && $offre->statut === 'en_attente';
+    }
+
+    public function accept(User $user, Offre $offre): bool
+    {
+        return $user->role === 'Entreprise'
+            && $offre->mission->id_utilisateur === $user->id
+            && $offre->statut === 'en_attente';
+    }
+
+    public function refuse(User $user, Offre $offre): bool
+    {
+        return $user->role === 'Entreprise'
+            && $offre->mission->id_utilisateur === $user->id
+            && $offre->statut === 'en_attente';
+    }
 }

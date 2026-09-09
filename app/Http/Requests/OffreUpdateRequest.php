@@ -4,12 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OffreRequest extends FormRequest
+class OffreUpdateRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'id_mission' => ['required', 'integer', 'exists:missions,id_mission'],
             'prix' => ['required', 'numeric', 'min:0'],
             'message' => ['required', 'string'],
             'pre_diagnostic' => ['nullable', 'string'],

@@ -2,16 +2,16 @@
 
 namespace App\Events;
 
-use App\Models\Mission;
+use App\Models\Offre;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MissionCreated
+class NewOfferReceived
 {
     use Dispatchable, SerializesModels;
 
     public function __construct(
-        public Mission $mission
+        public Offre $offre
     ) {
     }
 }

@@ -22,6 +22,15 @@
                 <div class="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800">{{ session('error') }}</div>
             @endif
 
+            <form method="GET" action="{{ route('missions.index') }}" class="mc-panel mb-6 flex flex-col gap-3 p-4 sm:flex-row">
+                <label for="search" class="sr-only">Rechercher une mission</label>
+                <input id="search" name="search" type="search" value="{{ $search ?? '' }}" placeholder="Rechercher par spécialité, titre ou localisation" class="mc-input flex-1">
+                <button type="submit" class="inline-flex min-h-11 items-center justify-center rounded-lg bg-sky-700 px-4 py-2.5 text-sm font-bold text-white hover:bg-sky-800">Rechercher</button>
+                @if (!empty($search))
+                    <a href="{{ route('missions.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:border-sky-600 hover:text-sky-700">Effacer</a>
+                @endif
+            </form>
+
             @if ($missions->isEmpty())
                 <div class="mc-panel border-dashed px-6 py-16 text-center">
                     <h3 class="text-lg font-semibold text-slate-900">Aucune mission disponible</h3>
