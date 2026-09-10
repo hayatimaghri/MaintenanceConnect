@@ -34,27 +34,27 @@ class OffrePolicy
     {
         return $user->role === 'Technicien'
             && $offre->id_utilisateur === $user->id
-            && $offre->statut === 'en_attente';
+            && $offre->statut === 'en attente';
     }
 
     public function delete(User $user, Offre $offre): bool
     {
         return $user->role === 'Technicien'
             && $offre->id_utilisateur === $user->id
-            && $offre->statut === 'en_attente';
+            && $offre->statut === 'en attente';
     }
 
     public function accept(User $user, Offre $offre): bool
     {
         return $user->role === 'Entreprise'
             && $offre->mission->id_utilisateur === $user->id
-            && $offre->statut === 'en_attente';
+            && $offre->statut === 'en attente';
     }
 
     public function refuse(User $user, Offre $offre): bool
     {
         return $user->role === 'Entreprise'
             && $offre->mission->id_utilisateur === $user->id
-            && $offre->statut === 'en_attente';
+            && $offre->statut === 'en attente';
     }
 }

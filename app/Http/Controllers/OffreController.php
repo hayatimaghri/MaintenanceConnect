@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OffreRequest;
@@ -6,10 +7,12 @@ use App\Http\Requests\OffreUpdateRequest;
 use App\Models\Offre;
 use App\Models\Mission;
 use App\Events\NewOfferReceived;
+use App\Events\OfferAccepted;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 
 class OffreController extends Controller
 {
@@ -36,8 +39,8 @@ class OffreController extends Controller
                 ->with('error', 'Mission introuvable.');
         }
 
-        // Vérifier qu'une seule offre existe pour
-        // ce technicien et cette mission
+        // Vérifier qu'une seule offre existe
+        // pour ce technicien et cette mission
         $existingOffer = Offre::where('id_mission', $mission->id_mission)
             ->where('id_utilisateur', $user->id)
             ->first();
@@ -56,13 +59,16 @@ class OffreController extends Controller
             'message' => $request->message,
             'pre_diagnostic' => $request->pre_diagnostic,
             'delai' => $request->delai,
-            'statut' => 'en_attente',
+
+            // Statut utilisé dans la base de données
+            'statut' => 'en attente',
+
             'date_offre' => now(),
             'id_mission' => $mission->id_mission,
             'id_utilisateur' => $user->id,
         ]);
 
-        // Notification entreprise
+        // Notification de l'entreprise
         event(new NewOfferReceived($offre));
 
         return redirect()
@@ -123,13 +129,38 @@ class OffreController extends Controller
 
         $this->authorize('accept', $offre);
 
-        $offre->update([
-            'statut' => 'acceptee',
-        ]);
+        $mission = $offre->mission;
+
+        DB::transaction(function () use ($offre, $mission) {
+
+            // 1. Accepter l'offre sélectionnée
+            $offre->update([
+                'statut' => 'acceptee',
+            ]);
+
+            // 2. Affecter la mission
+            $mission->update([
+                'statut' => 'Affectée',
+            ]);
+
+            // 3. Refuser automatiquement les autres offres
+            $mission->offres()
+                ->where('id_offre', '!=', $offre->id_offre)
+                ->where('statut', 'en attente')
+                ->update([
+                    'statut' => 'refusee',
+                ]);
+        });
+
+        // 4. Notifier le technicien sélectionné
+        event(new OfferAccepted($offre));
 
         return redirect()
-            ->route('missions.show', $offre->mission->id_mission)
-            ->with('status', 'Offre acceptée avec succès.');
+            ->route('missions.show', $mission->id_mission)
+            ->with(
+                'status',
+                'Offre acceptée avec succès. La mission est maintenant affectée.'
+            );
     }
 
     /**
@@ -152,4 +183,3 @@ class OffreController extends Controller
             ->with('status', 'Offre refusée avec succès.');
     }
 }
-

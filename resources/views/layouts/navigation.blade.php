@@ -43,7 +43,7 @@
 
                         $unreadCount = $notifications->filter(function ($notification) {
                             return !session()->has(
-                                "notification_read_{$notification->id}"
+                                "notification_read_{$notification->id_notification}"
                             );
                         })->count();
                     @endphp
@@ -55,6 +55,7 @@
                         class="relative rounded-xl p-2 text-gray-500 hover:bg-gray-100 hover:text-blue-700 focus:outline-none"
                     >
 
+                        {{-- Bell icon --}}
                         <svg
                             class="h-6 w-6"
                             fill="none"
@@ -69,10 +70,18 @@
                             />
                         </svg>
 
-                        {{-- BLUE BADGE --}}
+                        {{-- BLUE NUMBER --}}
                         @if ($unreadCount > 0)
                             <span
-                                class="absolute -right-2 -top-2 flex h-6 min-w-6 items-center justify-center rounded-full bg-blue-600 px-1.5 text-xs font-extrabold text-white shadow-md ring-2 ring-white"
+                                class="absolute -right-1 -top-1
+                                       min-w-[20px] h-[20px]
+                                       flex items-center justify-center
+                                       rounded-full
+                                       bg-blue-600
+                                       px-1
+                                       text-xs font-bold
+                                       text-white
+                                       border-2 border-white"
                             >
                                 {{ $unreadCount }}
                             </span>
@@ -117,14 +126,14 @@
 
                                 @php
                                     $isRead = session()->has(
-                                        "notification_read_{$notification->id}"
+                                        "notification_read_{$notification->id_notification}"
                                     );
                                 @endphp
 
                                 {{-- NOTIFICATION --}}
                                 <form
                                     method="POST"
-                                    action="{{ route('notifications.read', $notification->id) }}"
+                                    action="{{ route('notifications.read', $notification->id_notification) }}"
                                 >
 
                                     @csrf
@@ -199,6 +208,7 @@
 
                             @empty
 
+                                {{-- EMPTY --}}
                                 <div class="px-4 py-8 text-center">
 
                                     <div
@@ -243,7 +253,12 @@
                     <x-slot name="trigger">
 
                         <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                            class="inline-flex items-center px-3 py-2 border border-transparent
+                                   text-sm leading-4 font-medium rounded-md
+                                   text-gray-500 bg-white
+                                   hover:text-gray-700
+                                   focus:outline-none
+                                   transition ease-in-out duration-150"
                         >
 
                             <div>
@@ -277,6 +292,7 @@
                         </x-dropdown-link>
 
                         <form method="POST" action="{{ route('logout') }}">
+
                             @csrf
 
                             <x-dropdown-link
@@ -299,7 +315,14 @@
 
                 <button
                     @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                    class="inline-flex items-center justify-center p-2 rounded-md
+                           text-gray-400
+                           hover:text-gray-500
+                           hover:bg-gray-100
+                           focus:outline-none
+                           focus:bg-gray-100
+                           focus:text-gray-500
+                           transition duration-150 ease-in-out"
                 >
 
                     <svg
@@ -315,7 +338,7 @@
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18H4"
+                            d="M4 6h16M4 12h16M4 18h16"
                         />
 
                         <path
@@ -375,6 +398,7 @@
                 </x-responsive-nav-link>
 
                 <form method="POST" action="{{ route('logout') }}">
+
                     @csrf
 
                     <x-responsive-nav-link
@@ -393,4 +417,5 @@
     </div>
 
 </nav>
+
 

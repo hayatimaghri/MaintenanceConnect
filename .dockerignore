@@ -15,3 +15,7 @@ docker-compose.yml
 *.zip
 *.log
 # Database backups
+maintenanceconnect_backup.sql
+maintenanceconnect_data.sql
+maintenanceconnect_data_clean.sql
+maintenanceconnect_structure.sql
