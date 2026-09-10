@@ -10,7 +10,8 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class EvaluationController extends Controller
 {
-    public function store(EvaluationRequest $request, Mission $mission): RedirectResponse
+
+public function store(EvaluationRequest $request, Mission $mission): RedirectResponse
 {
     $user = auth()->user();
 
@@ -31,20 +32,40 @@ class EvaluationController extends Controller
         );
     }
 
-    // 4. Validation via EvaluationRequest
+    // 4. Vérifier qu'une évaluation n'existe pas déjà
+    if ($mission->evaluation) {
+        return redirect()
+            ->route('missions.show', $mission->id_mission)
+            ->with('error', 'Cette mission a déjà été évaluée.');
+    }
+
+    // 5. Récupérer l'offre acceptée
+    $offreAcceptee = $mission->offres()
+        ->where('statut', 'acceptee')
+        ->first();
+
+    if (! $offreAcceptee) {
+        return redirect()
+            ->route('missions.show', $mission->id_mission)
+            ->with('error', 'Aucun technicien affecté à cette mission.');
+    }
+
+    // 6. Validation
     $validated = $request->validated();
 
-    // 5. Créer l'évaluation
+    // 7. Créer l'évaluation du technicien
     Evaluation::create([
         'note' => $validated['note'],
         'commentaire' => $validated['commentaire'] ?? null,
         'id_mission' => $mission->id_mission,
-        'id_utilisateur' => $user->id,
+        'id_utilisateur' => $offreAcceptee->id_utilisateur,
     ]);
 
-    // 6. Retourner vers la mission
+    // 8. Retourner vers la mission
     return redirect()
         ->route('missions.show', $mission->id_mission)
-        ->with('status', 'Evaluation added');
+        ->with('status', 'Évaluation enregistrée avec succès.');
 }
+
+
 }

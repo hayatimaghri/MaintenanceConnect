@@ -18,7 +18,7 @@ class MissionFactory extends Factory
             ]),
             'titre' => fake()->randomElement([
                 'Maintenance préventive d’une ligne de production',
-                'Diagnostic d’une panne électrique industrielle',
+             
                 'Maintenance d’un système hydraulique',
                 'Intervention sur une armoire électrique',
                 'Maintenance d’une machine de production',

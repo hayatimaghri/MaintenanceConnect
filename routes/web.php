@@ -37,6 +37,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('missions', [MissionController::class, 'store'])->name('missions.store');
     Route::get('missions/{mission}', [MissionController::class, 'show'])->name('missions.show');
     Route::put('missions/{mission}', [MissionController::class, 'update'])->name('missions.update');
+
+    Route::put('missions/{mission}/status/{status}', [MissionController::class, 'updateStatus'])
+    ->name('missions.updateStatus');
     Route::delete('missions/{mission}', [MissionController::class, 'destroy'])->name('missions.destroy');
 
     Route::post('offres', [OffreController::class, 'store'])->name('offres.store');
@@ -63,6 +66,7 @@ Route::delete('technicien/experiences/{experience}', [ExperienceController::clas
 
     Route::get('/admin/users', [UserController::class, 'index'])
     ->name('admin.users.index');
+
 });
 
 Route::post('/notifications/{notification}/read', function ($notification) {
@@ -70,5 +74,7 @@ Route::post('/notifications/{notification}/read', function ($notification) {
 
     return back();
 })->middleware('auth')->name('notifications.read');
+
+
 
 require __DIR__.'/auth.php';

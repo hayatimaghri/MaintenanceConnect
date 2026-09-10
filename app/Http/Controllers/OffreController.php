@@ -39,6 +39,17 @@ class OffreController extends Controller
                 ->with('error', 'Mission introuvable.');
         }
 
+        // Une mission Affectée, En cours, Terminée ou Annulée
+        // n'accepte plus de nouvelles offres.
+        if (!in_array($mission->statut, ['Publiée', 'En attente'], true)) {
+            return redirect()
+                ->route('missions.show', $mission->id_mission)
+                ->with(
+                    'error',
+                    'Cette mission n’accepte plus de nouvelles offres.'
+                );
+        }
+
         // Vérifier qu'une seule offre existe
         // pour ce technicien et cette mission
         $existingOffer = Offre::where('id_mission', $mission->id_mission)
@@ -59,10 +70,7 @@ class OffreController extends Controller
             'message' => $request->message,
             'pre_diagnostic' => $request->pre_diagnostic,
             'delai' => $request->delai,
-
-            // Statut utilisé dans la base de données
             'statut' => 'en attente',
-
             'date_offre' => now(),
             'id_mission' => $mission->id_mission,
             'id_utilisateur' => $user->id,

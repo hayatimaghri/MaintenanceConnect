@@ -98,6 +98,37 @@ class MissionController extends Controller
         return redirect()->route('missions.show', $mission->id_mission)->with('status', 'Mission updated');
     }
 
+// modification de status//
+    public function updateStatus(Mission $mission, string $status): RedirectResponse
+{
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+
+    Gate::authorize('update', $mission);
+
+    $allowedTransitions = [
+        'Affectée' => ['En cours', 'Annulée'],
+        'En cours' => ['Terminée', 'Annulée'],
+    ];
+
+    $currentStatus = $mission->statut;
+
+    if (!isset($allowedTransitions[$currentStatus])) {
+        return back()->with('error', 'Cette mission ne peut pas changer de statut.');
+    }
+
+    if (!in_array($status, $allowedTransitions[$currentStatus], true)) {
+        return back()->with('error', 'Transition de statut non autorisée.');
+    }
+
+    $mission->update([
+        'statut' => $status,
+    ]);
+
+    return back()->with('status', "Statut de la mission mis à jour : {$status}.");
+}
+
     public function destroy(Mission $mission): RedirectResponse
     {
         if (! auth()->check()) {

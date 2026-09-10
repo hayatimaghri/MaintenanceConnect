@@ -1,126 +1,182 @@
-<nav x-data="{ open: false, notificationsOpen: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false, notificationsOpen: false }"
+     class="bg-white border-b border-gray-100">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="flex justify-between h-16">
 
-            {{-- LEFT --}}
+            {{-- ================= LEFT ================= --}}
             <div class="flex">
 
-                {{-- Logo --}}
+                {{-- LOGO --}}
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo
+                            class="block h-9 w-auto fill-current text-gray-800"
+                        />
                     </a>
                 </div>
 
-                {{-- Dashboard --}}
+                {{-- DASHBOARD --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
                     <x-nav-link
                         :href="route('dashboard')"
                         :active="request()->routeIs('dashboard')"
                     >
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
                 </div>
 
             </div>
 
-            {{-- RIGHT --}}
+
+            {{-- ================= RIGHT ================= --}}
             <div class="hidden sm:flex sm:items-center sm:ms-6">
 
                 {{-- ================= NOTIFICATIONS ================= --}}
+
+                @php
+
+                    $allNotifications = Auth::user()
+                        ->notifications()
+                        ->orderByDesc('date_notification')
+                        ->get();
+
+                    $notifications = $allNotifications->take(10);
+
+                    $unreadCount = $allNotifications->filter(function ($notification) {
+
+                        return !session()->has(
+                            "notification_read_{$notification->id_notification}"
+                        );
+
+                    })->count();
+
+                @endphp
+
+
+                {{-- CONTAINER NOTIFICATION --}}
                 <div
                     class="relative me-4"
                     x-data="{ notificationsOpen: false }"
                 >
 
-                    {{-- Notifications --}}
-                    @php
-                        $notifications = Auth::user()->notifications
-                            ->sortByDesc('date_notification')
-                            ->take(10);
-
-                        $unreadCount = $notifications->filter(function ($notification) {
-                            return !session()->has(
-                                "notification_read_{$notification->id_notification}"
-                            );
-                        })->count();
-                    @endphp
-
-                    {{-- Bell --}}
+                    {{-- ================= BOUTON CLOCHE ================= --}}
                     <button
-                        @click="notificationsOpen = !notificationsOpen"
                         type="button"
-                        class="relative rounded-xl p-2 text-gray-500 hover:bg-gray-100 hover:text-blue-700 focus:outline-none"
+                        @click="notificationsOpen = !notificationsOpen"
+                        class="relative flex h-10 w-10 items-center justify-center rounded-xl text-gray-500 transition hover:bg-gray-100 hover:text-blue-700 focus:outline-none"
+                        aria-label="Notifications"
                     >
 
-                        {{-- Bell icon --}}
+                        {{-- ICON CLOCHE --}}
                         <svg
                             class="h-6 w-6"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
+                            aria-hidden="true"
                         >
+
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
                                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                             />
+
                         </svg>
 
-                        {{-- BLUE NUMBER --}}
-                       @if ($unreadCount > 0)
-    <span
-        class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-xs font-bold text-white shadow-sm"
-    >
-        {{ $unreadCount }}
-    </span>
-@endif
+
+                        {{-- ================= BADGE ROUGE ================= --}}
+                        @if ($unreadCount > 0)
+
+                            <span
+                                id="notification-badge"
+                                class="absolute -right-1.5 -top-1.5 z-20 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-white bg-red-600 px-1 text-[10px] font-extrabold leading-none text-white shadow-md"
+                            >
+                                {{ $unreadCount }}
+                            </span>
+
+                        @else
+
+                            <span
+                                id="notification-badge"
+                                class="absolute -right-1.5 -top-1.5 z-20 hidden h-5 min-w-5 items-center justify-center rounded-full border-2 border-white bg-red-600 px-1 text-[10px] font-extrabold leading-none text-white shadow-md"
+                            >
+                                0
+                            </span>
+
+                        @endif
 
                     </button>
 
-                    {{-- DROPDOWN --}}
+
+                    {{-- ================= DROPDOWN ================= --}}
                     <div
                         x-show="notificationsOpen"
-                        @click.outside="notificationsOpen = false"
                         x-transition
+                        @click.outside="notificationsOpen = false"
+                        class="absolute right-0 top-full z-[9999] mt-3 w-96 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl"
                         style="display: none;"
-                        class="absolute right-0 z-50 mt-3 w-80 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl"
                     >
 
                         {{-- HEADER --}}
-                        <div class="border-b border-gray-100 px-4 py-3">
+                        <div class="border-b border-gray-100 bg-white px-4 py-4">
 
                             <div class="flex items-center justify-between">
 
-                                <h3 class="text-sm font-bold text-gray-800">
-                                    Notifications
-                                </h3>
+                                <div>
 
-                                @if ($unreadCount > 0)
-                                    <span
-                                        class="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-bold text-blue-700"
-                                    >
-                                        {{ $unreadCount }}
-                                    </span>
-                                @endif
+                                    <h3 class="text-sm font-bold text-gray-900">
+                                        Notifications
+                                    </h3>
+
+                                    <p class="mt-0.5 text-xs text-gray-400">
+                                        Vos dernières notifications
+                                    </p>
+
+                                </div>
+
+
+                                {{-- NOMBRE NON LUES --}}
+                                <span
+                                    id="notification-header-count"
+                                    class="{{ $unreadCount > 0 ? '' : 'hidden' }} rounded-full bg-red-100 px-2.5 py-1 text-xs font-bold text-red-600"
+                                >
+                                    {{ $unreadCount }}
+                                    non lue{{ $unreadCount > 1 ? 's' : '' }}
+                                </span>
+
+
+                                {{-- TOUT EST LU --}}
+                                <span
+                                    id="notification-all-read"
+                                    class="{{ $unreadCount > 0 ? 'hidden' : '' }} rounded-full bg-green-100 px-2.5 py-1 text-xs font-bold text-green-600"
+                                >
+                                    Tout est lu
+                                </span>
 
                             </div>
 
                         </div>
 
-                        {{-- LIST --}}
-                        <div class="max-h-80 overflow-y-auto">
+
+                        {{-- ================= LISTE ================= --}}
+                        <div class="max-h-[420px] overflow-y-auto">
 
                             @forelse ($notifications as $notification)
 
                                 @php
+
                                     $isRead = session()->has(
                                         "notification_read_{$notification->id_notification}"
                                     );
+
                                 @endphp
+
 
                                 {{-- NOTIFICATION --}}
                                 <form
@@ -132,18 +188,18 @@
 
                                     <button
                                         type="submit"
-                                        class="w-full border-b border-gray-100 px-4 py-4 text-left transition
+                                        class="group w-full border-b border-gray-100 px-4 py-4 text-left transition
                                         {{ $isRead
                                             ? 'bg-white hover:bg-gray-50'
                                             : 'bg-blue-50 hover:bg-blue-100'
                                         }}"
                                     >
 
-                                        <div class="flex gap-3">
+                                        <div class="flex items-start gap-3">
 
-                                            {{-- ICON --}}
+                                            {{-- ICON NOTIFICATION --}}
                                             <div
-                                                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full
+                                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full
                                                 {{ $isRead
                                                     ? 'bg-gray-100 text-gray-500'
                                                     : 'bg-blue-100 text-blue-600'
@@ -156,40 +212,51 @@
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
                                                 >
+
                                                     <path
                                                         stroke-linecap="round"
                                                         stroke-linejoin="round"
                                                         stroke-width="2"
                                                         d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622C17.176 19.29 21 14.591 21 9c0-.674-.055-1.335-.16-1.976z"
                                                     />
+
                                                 </svg>
 
                                             </div>
 
-                                            {{-- CONTENT --}}
+
+                                            {{-- CONTENU --}}
                                             <div class="min-w-0 flex-1">
 
                                                 <p
-                                                    class="text-sm font-semibold
+                                                    class="text-sm leading-5
                                                     {{ $isRead
-                                                        ? 'text-gray-700'
-                                                        : 'text-blue-800'
+                                                        ? 'font-medium text-gray-700'
+                                                        : 'font-bold text-blue-800'
                                                     }}"
                                                 >
                                                     {{ $notification->message }}
                                                 </p>
 
+
                                                 <p class="mt-1 text-xs text-gray-400">
-                                                    {{ \Carbon\Carbon::parse($notification->date_notification)->diffForHumans() }}
+
+                                                    {{ \Carbon\Carbon::parse(
+                                                        $notification->date_notification
+                                                    )->diffForHumans() }}
+
                                                 </p>
 
                                             </div>
 
-                                            {{-- BLUE DOT --}}
+
+                                            {{-- POINT NON LUE --}}
                                             @if (!$isRead)
+
                                                 <span
                                                     class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600"
                                                 ></span>
+
                                             @endif
 
                                         </div>
@@ -200,28 +267,33 @@
 
                             @empty
 
-                                {{-- EMPTY --}}
-                                <div class="px-4 py-8 text-center">
+                                {{-- AUCUNE NOTIFICATION --}}
+                                <div class="px-4 py-10 text-center">
 
                                     <div
                                         class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100"
                                     >
+
                                         <svg
-                                            class="h-6 w-6 text-gray-400"
+                                            class="h-7 w-7 text-gray-400"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
                                         >
+
                                             <path
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
                                                 stroke-width="2"
                                                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                                             />
+
                                         </svg>
+
                                     </div>
 
-                                    <p class="text-sm font-medium text-gray-600">
+
+                                    <p class="text-sm font-semibold text-gray-600">
                                         Aucune notification
                                     </p>
 
@@ -235,9 +307,24 @@
 
                         </div>
 
+
+                        {{-- FOOTER --}}
+                        @if ($allNotifications->count() > 10)
+
+                            <div class="border-t border-gray-100 bg-gray-50 px-4 py-3 text-center">
+
+                                <span class="text-xs font-medium text-gray-500">
+                                    10 dernières notifications affichées
+                                </span>
+
+                            </div>
+
+                        @endif
+
                     </div>
 
                 </div>
+
 
                 {{-- ================= PROFILE ================= --}}
                 <x-dropdown align="right" width="48">
@@ -245,12 +332,7 @@
                     <x-slot name="trigger">
 
                         <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent
-                                   text-sm leading-4 font-medium rounded-md
-                                   text-gray-500 bg-white
-                                   hover:text-gray-700
-                                   focus:outline-none
-                                   transition ease-in-out duration-150"
+                            class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
                         >
 
                             <div>
@@ -260,15 +342,17 @@
                             <div class="ms-1">
 
                                 <svg
-                                    class="fill-current h-4 w-4"
+                                    class="h-4 w-4 fill-current"
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20"
                                 >
+
                                     <path
                                         fill-rule="evenodd"
                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                         clip-rule="evenodd"
                                     />
+
                                 </svg>
 
                             </div>
@@ -277,13 +361,18 @@
 
                     </x-slot>
 
+
                     <x-slot name="content">
 
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <form method="POST" action="{{ route('logout') }}">
+
+                        <form
+                            method="POST"
+                            action="{{ route('logout') }}"
+                        >
 
                             @csrf
 
@@ -302,19 +391,13 @@
 
             </div>
 
-            {{-- HAMBURGER --}}
+
+            {{-- ================= HAMBURGER ================= --}}
             <div class="-me-2 flex items-center sm:hidden">
 
                 <button
                     @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md
-                           text-gray-400
-                           hover:text-gray-500
-                           hover:bg-gray-100
-                           focus:outline-none
-                           focus:bg-gray-100
-                           focus:text-gray-500
-                           transition duration-150 ease-in-out"
+                    class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
                 >
 
                     <svg
@@ -352,13 +435,14 @@
 
     </div>
 
-    {{-- RESPONSIVE MENU --}}
+
+    {{-- ================= RESPONSIVE MENU ================= --}}
     <div
         :class="{'block': open, 'hidden': ! open}"
         class="hidden sm:hidden"
     >
 
-        <div class="pt-2 pb-3 space-y-1">
+        <div class="space-y-1 pb-3 pt-2">
 
             <x-responsive-nav-link
                 :href="route('dashboard')"
@@ -369,19 +453,21 @@
 
         </div>
 
-        <div class="pt-4 pb-1 border-t border-gray-200">
+
+        <div class="border-t border-gray-200 pb-1 pt-4">
 
             <div class="px-4">
 
-                <div class="font-medium text-base text-gray-800">
+                <div class="text-base font-medium text-gray-800">
                     {{ Auth::user()->name }}
                 </div>
 
-                <div class="font-medium text-sm text-gray-500">
+                <div class="text-sm font-medium text-gray-500">
                     {{ Auth::user()->email }}
                 </div>
 
             </div>
+
 
             <div class="mt-3 space-y-1">
 
@@ -389,7 +475,11 @@
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
-                <form method="POST" action="{{ route('logout') }}">
+
+                <form
+                    method="POST"
+                    action="{{ route('logout') }}"
+                >
 
                     @csrf
 
@@ -411,3 +501,114 @@
 </nav>
 
 
+{{-- ================= AUTO UPDATE NOTIFICATION COUNT ================= --}}
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        function updateNotificationCount() {
+
+            fetch("{{ route('notifications.unreadCount') }}", {
+
+                method: 'GET',
+
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+
+            })
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error('Erreur HTTP : ' + response.status);
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                const badge = document.getElementById('notification-badge');
+
+                const headerCount =
+                    document.getElementById('notification-header-count');
+
+                const allRead =
+                    document.getElementById('notification-all-read');
+
+
+                if (!badge) {
+                    return;
+                }
+
+
+                const count = Number(data.count) || 0;
+
+
+                {{-- BADGE NAVBAR --}}
+                if (count > 0) {
+
+                    badge.textContent = count;
+
+                    badge.classList.remove('hidden');
+
+                } else {
+
+                    badge.textContent = '0';
+
+                    badge.classList.add('hidden');
+
+                }
+
+
+                {{-- HEADER DROPDOWN --}}
+                if (headerCount && allRead) {
+
+                    if (count > 0) {
+
+                        headerCount.textContent =
+                            count +
+                            ' non lue' +
+                            (count > 1 ? 's' : '');
+
+                        headerCount.classList.remove('hidden');
+
+                        allRead.classList.add('hidden');
+
+                    } else {
+
+                        headerCount.classList.add('hidden');
+
+                        allRead.classList.remove('hidden');
+
+                    }
+
+                }
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    'Erreur lors de la mise à jour des notifications :',
+                    error
+                );
+
+            });
+
+        }
+
+
+        {{-- PREMIÈRE VÉRIFICATION --}}
+        updateNotificationCount();
+
+
+        {{-- VÉRIFICATION TOUTES LES 3 SECONDES --}}
+        setInterval(updateNotificationCount, 3000);
+
+    });
+
+</script>

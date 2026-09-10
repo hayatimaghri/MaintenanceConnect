@@ -79,9 +79,6 @@
                                 </p>
                             </div>
 
-                            <span class="w-fit rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700">
-                                Plateforme active
-                            </span>
                         </div>
 
 
@@ -306,48 +303,6 @@
                         </section>
 
 
-                        <!-- ACTIONS ADMINISTRATEUR -->
-                        <section class="mt-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-
-                            <div class="mb-4">
-
-                                <p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
-                                    Accès rapide
-                                </p>
-
-                                <h2 class="mt-1 font-extrabold text-slate-950">
-                                    Actions administrateur
-                                </h2>
-
-                            </div>
-
-
-                            <div class="flex flex-wrap gap-3">
-
-                                <!-- GESTION DES MISSIONS -->
-                                <a href="{{ route('missions.index') }}"
-                                   class="rounded-lg bg-sky-700 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-sky-800">
-                                    Gérer les missions
-                                </a>
-
-
-                                <!-- GESTION DES UTILISATEURS -->
-                                <a href="{{ route('admin.users.index') }}"
-                                   class="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-indigo-700">
-                                    Gestion des utilisateurs
-                                </a>
-
-
-                                <!-- PROFIL -->
-                                <a href="{{ route('profile.edit') }}"
-                                   class="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-sky-400 hover:text-sky-700">
-                                    Mon profil
-                                </a>
-
-                            </div>
-
-                        </section>
-
                     </div>
                 </div>
 
@@ -485,6 +440,28 @@
                     </section>
 
                 @else
+
+                    @if ($user->notifications->isNotEmpty())
+                        <section class="mc-panel overflow-hidden border-sky-100">
+                            <div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+                                <div>
+                                    <h2 class="font-extrabold text-slate-950">Notifications</h2>
+                                    <p class="mt-1 text-xs text-slate-500">Vous avez {{ $user->notifications->count() }} notification(s).</p>
+                                </div>
+                                <span class="flex h-6 min-w-6 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">
+                                    {{ $user->notifications->count() }}
+                                </span>
+                            </div>
+                            <div class="divide-y divide-slate-100">
+                                @foreach ($user->notifications->sortByDesc('date_notification')->take(5) as $notification)
+                                    <div class="bg-sky-50/60 px-5 py-4">
+                                        <p class="text-sm font-semibold text-slate-800">{{ $notification->message }}</p>
+                                        <p class="mt-1 text-xs text-slate-500">{{ \Carbon\Carbon::parse($notification->date_notification)->diffForHumans() }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </section>
+                    @endif
 
                     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 

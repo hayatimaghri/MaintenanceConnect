@@ -17,7 +17,11 @@
             </a>
             <a href="{{ route('missions.index') }}" class="flex items-center gap-3 rounded-lg {{ request()->routeIs('missions.*') ? 'bg-sky-500/15 text-sky-300' : 'text-slate-300 transition hover:bg-white/5 hover:text-white' }} px-3 py-3 text-sm font-semibold">
                 <span class="flex h-7 w-7 items-center justify-center rounded-md {{ request()->routeIs('missions.*') ? 'bg-sky-500' : 'bg-white/10' }} text-xs font-black">M</span>
-                Missions
+                Gérer les missions
+            </a>
+            <a href="{{ route('admin.users.index') }}" class="flex items-center gap-3 rounded-lg {{ request()->routeIs('admin.users.*') ? 'bg-sky-500/15 text-sky-300' : 'text-slate-300 transition hover:bg-white/5 hover:text-white' }} px-3 py-3 text-sm font-semibold">
+                <span class="flex h-7 w-7 items-center justify-center rounded-md {{ request()->routeIs('admin.users.*') ? 'bg-sky-500' : 'bg-white/10' }} text-xs font-black">U</span>
+                Gestion des utilisateurs
             </a>
             <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 rounded-lg {{ request()->routeIs('profile.*') ? 'bg-sky-500/15 text-sky-300' : 'text-slate-300 transition hover:bg-white/5 hover:text-white' }} px-3 py-3 text-sm font-semibold">
                 <span class="flex h-7 w-7 items-center justify-center rounded-md {{ request()->routeIs('profile.*') ? 'bg-sky-500' : 'bg-white/10' }} text-xs font-black">P</span>
