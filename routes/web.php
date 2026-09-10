@@ -9,6 +9,8 @@ use App\Http\Controllers\CompetenceController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+
 
 
 Route::get('/', function () {
@@ -58,6 +60,9 @@ Route::delete('technicien/experiences/{experience}', [ExperienceController::clas
 
     Route::post('missions/{mission}/evaluations', [EvaluationController::class, 'store'])
     ->name('evaluations.store');
+
+    Route::get('/admin/users', [UserController::class, 'index'])
+    ->name('admin.users.index');
 });
 
 Route::post('/notifications/{notification}/read', function ($notification) {

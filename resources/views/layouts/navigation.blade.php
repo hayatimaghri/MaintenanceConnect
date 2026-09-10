@@ -71,21 +71,13 @@
                         </svg>
 
                         {{-- BLUE NUMBER --}}
-                        @if ($unreadCount > 0)
-                            <span
-                                class="absolute -right-1 -top-1
-                                       min-w-[20px] h-[20px]
-                                       flex items-center justify-center
-                                       rounded-full
-                                       bg-blue-600
-                                       px-1
-                                       text-xs font-bold
-                                       text-white
-                                       border-2 border-white"
-                            >
-                                {{ $unreadCount }}
-                            </span>
-                        @endif
+                       @if ($unreadCount > 0)
+    <span
+        class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-xs font-bold text-white shadow-sm"
+    >
+        {{ $unreadCount }}
+    </span>
+@endif
 
                     </button>
 
