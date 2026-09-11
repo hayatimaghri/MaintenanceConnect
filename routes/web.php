@@ -64,9 +64,18 @@ Route::delete('technicien/experiences/{experience}', [ExperienceController::clas
     Route::post('missions/{mission}/evaluations', [EvaluationController::class, 'store'])
     ->name('evaluations.store');
 
-    Route::get('/admin/users', [UserController::class, 'index'])
-    ->name('admin.users.index');
+   Route::middleware('can:isAdmin')->group(function () {
 
+    Route::get('/admin/users', [UserController::class, 'index'])
+        ->name('admin.users.index');
+
+    Route::patch('/admin/users/{user}/suspend', [UserController::class, 'suspend'])
+        ->name('admin.users.suspend');
+
+    Route::patch('/admin/users/{user}/activate', [UserController::class, 'activate'])
+        ->name('admin.users.activate');
+
+});
 });
 
 Route::post('/notifications/{notification}/read', function ($notification) {
