@@ -12,34 +12,24 @@
 
                 {{-- LOGO --}}
                 <div class="shrink-0 flex items-center">
-
                     <a href="{{ route('dashboard') }}">
-
                         <x-application-logo
                             class="block h-9 w-auto fill-current text-gray-800"
                         />
-
                     </a>
-
                 </div>
-
 
                 {{-- DASHBOARD --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-
                     <x-nav-link
                         :href="route('dashboard')"
                         :active="request()->routeIs('dashboard')"
                     >
-
                         {{ __('Dashboard') }}
-
                     </x-nav-link>
-
                 </div>
 
             </div>
-
 
 
             {{-- ========================================================= --}}
@@ -47,7 +37,6 @@
             {{-- ========================================================= --}}
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-
 
                 {{-- ===================================================== --}}
                 {{-- NOTIFICATIONS --}}
@@ -63,25 +52,25 @@
                     $notifications = $allNotifications->take(10);
 
                     $unreadCount = $allNotifications->filter(function ($notification) {
-
                         return !session()->has(
                             "notification_read_{$notification->id_notification}"
                         );
-
                     })->count();
 
                 @endphp
 
 
+                {{-- ===================================================== --}}
                 {{-- NOTIFICATION CONTAINER --}}
+                {{-- ===================================================== --}}
+
                 <div
                     class="relative me-5"
                     x-data="{ notificationsOpen: false }"
                 >
 
-
                     {{-- ================================================= --}}
-                    {{-- BELL BUTTON --}}
+                    {{-- BELL --}}
                     {{-- ================================================= --}}
 
                     <button
@@ -91,7 +80,7 @@
                         aria-label="Notifications"
                     >
 
-                        {{-- BELL --}}
+                        {{-- BELL ICON --}}
                         <svg
                             class="h-6 w-6"
                             fill="none"
@@ -99,19 +88,17 @@
                             viewBox="0 0 24 24"
                             aria-hidden="true"
                         >
-
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
                                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                             />
-
                         </svg>
 
 
                         {{-- ================================================= --}}
-                        {{-- 🔴 RED NOTIFICATION BADGE --}}
+                        {{-- RED BADGE --}}
                         {{-- ================================================= --}}
 
                         <span
@@ -128,7 +115,6 @@
                                 justify-center
                                 rounded-full
                                 bg-red-600
-                                p-0
                                 text-[11px]
                                 font-bold
                                 leading-none
@@ -137,21 +123,17 @@
                                 ring-2
                                 ring-white
                                 pointer-events-none
-
                                 {{ $unreadCount > 0 ? '' : 'hidden' }}
                             "
                         >
-
                             {{ $unreadCount }}
-
                         </span>
 
                     </button>
 
 
-
                     {{-- ================================================= --}}
-                    {{-- NOTIFICATION DROPDOWN --}}
+                    {{-- DROPDOWN --}}
                     {{-- ================================================= --}}
 
                     <div
@@ -175,7 +157,6 @@
                         style="display: none;"
                     >
 
-
                         {{-- ================================================= --}}
                         {{-- HEADER --}}
                         {{-- ================================================= --}}
@@ -185,7 +166,6 @@
                             <div class="flex items-center justify-between">
 
                                 <div>
-
                                     <h3 class="text-sm font-bold text-gray-900">
                                         Notifications
                                     </h3>
@@ -193,16 +173,14 @@
                                     <p class="mt-0.5 text-xs text-gray-400">
                                         Vos dernières notifications
                                     </p>
-
                                 </div>
 
 
-                                {{-- NOMBRE NON LUES --}}
+                                {{-- HEADER COUNT --}}
 
                                 <span
                                     id="notification-header-count"
                                     class="
-                                        {{ $unreadCount > 0 ? '' : 'hidden' }}
                                         rounded-full
                                         bg-red-100
                                         px-2.5
@@ -210,22 +188,17 @@
                                         text-xs
                                         font-bold
                                         text-red-600
+                                        {{ $unreadCount > 0 ? '' : 'hidden' }}
                                     "
                                 >
-
                                     {{ $unreadCount }}
-
                                     non lue{{ $unreadCount > 1 ? 's' : '' }}
-
                                 </span>
 
-
-                                {{-- TOUT EST LU --}}
 
                                 <span
                                     id="notification-all-read"
                                     class="
-                                        {{ $unreadCount > 0 ? 'hidden' : '' }}
                                         rounded-full
                                         bg-green-100
                                         px-2.5
@@ -233,11 +206,10 @@
                                         text-xs
                                         font-bold
                                         text-green-600
+                                        {{ $unreadCount > 0 ? 'hidden' : '' }}
                                     "
                                 >
-
                                     Tout est lu
-
                                 </span>
 
                             </div>
@@ -245,9 +217,8 @@
                         </div>
 
 
-
                         {{-- ================================================= --}}
-                        {{-- LISTE DES NOTIFICATIONS --}}
+                        {{-- NOTIFICATIONS LIST --}}
                         {{-- ================================================= --}}
 
                         <div class="max-h-[420px] overflow-y-auto">
@@ -255,27 +226,33 @@
                             @forelse ($notifications as $notification)
 
                                 @php
-
                                     $isRead = session()->has(
                                         "notification_read_{$notification->id_notification}"
                                     );
-
                                 @endphp
 
 
+                                {{-- ================================================= --}}
                                 {{-- NOTIFICATION --}}
+                                {{-- ================================================= --}}
 
                                 <form
                                     method="POST"
-                                    action="{{ route('notifications.read', $notification->id_notification) }}"
+                                    action="{{ route(
+                                        'notifications.read',
+                                        $notification->id_notification
+                                    ) }}"
+                                    class="notification-form"
+                                    data-notification-id="{{ $notification->id_notification }}"
+                                    data-is-read="{{ $isRead ? '1' : '0' }}"
                                 >
 
                                     @csrf
 
-
                                     <button
                                         type="submit"
                                         class="
+                                            notification-item
                                             group
                                             w-full
                                             border-b
@@ -284,7 +261,6 @@
                                             py-4
                                             text-left
                                             transition
-
                                             {{ $isRead
                                                 ? 'bg-white hover:bg-gray-50'
                                                 : 'bg-blue-50 hover:bg-blue-100'
@@ -294,13 +270,11 @@
 
                                         <div class="flex items-start gap-3">
 
-
-                                            {{-- ================================================= --}}
                                             {{-- ICON --}}
-                                            {{-- ================================================= --}}
 
                                             <div
                                                 class="
+                                                    notification-icon
                                                     flex
                                                     h-10
                                                     w-10
@@ -308,7 +282,6 @@
                                                     items-center
                                                     justify-center
                                                     rounded-full
-
                                                     {{ $isRead
                                                         ? 'bg-gray-100 text-gray-500'
                                                         : 'bg-blue-100 text-blue-600'
@@ -322,63 +295,51 @@
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
                                                 >
-
                                                     <path
                                                         stroke-linecap="round"
                                                         stroke-linejoin="round"
                                                         stroke-width="2"
                                                         d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622C17.176 19.29 21 14.591 21 9c0-.674-.055-1.335-.16-1.976z"
                                                     />
-
                                                 </svg>
 
                                             </div>
 
 
-
-                                            {{-- ================================================= --}}
                                             {{-- CONTENT --}}
-                                            {{-- ================================================= --}}
 
                                             <div class="min-w-0 flex-1">
 
                                                 <p
                                                     class="
+                                                        notification-message
                                                         text-sm
                                                         leading-5
-
                                                         {{ $isRead
                                                             ? 'font-medium text-gray-700'
                                                             : 'font-bold text-blue-800'
                                                         }}
                                                     "
                                                 >
-
                                                     {{ $notification->message }}
-
                                                 </p>
 
-
                                                 <p class="mt-1 text-xs text-gray-400">
-
                                                     {{ \Carbon\Carbon::parse(
                                                         $notification->date_notification
                                                     )->diffForHumans() }}
-
                                                 </p>
 
                                             </div>
 
 
-
-                                            {{-- ================================================= --}}
-                                            {{-- BLUE UNREAD DOT --}}
-                                            {{-- ================================================= --}}
+                                            {{-- BLUE DOT --}}
 
                                             @if (!$isRead)
 
                                                 <span
                                                     class="
+                                                        notification-dot
                                                         mt-2
                                                         h-2.5
                                                         w-2.5
@@ -386,8 +347,7 @@
                                                         rounded-full
                                                         bg-blue-600
                                                     "
-                                                >
-                                                </span>
+                                                ></span>
 
                                             @endif
 
@@ -399,10 +359,7 @@
 
                             @empty
 
-
-                                {{-- ================================================= --}}
                                 {{-- EMPTY --}}
-                                {{-- ================================================= --}}
 
                                 <div class="px-4 py-10 text-center">
 
@@ -426,18 +383,15 @@
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
                                         >
-
                                             <path
                                                 stroke-linecap="round"
                                                 stroke-linejoin="round"
                                                 stroke-width="2"
                                                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                                             />
-
                                         </svg>
 
                                     </div>
-
 
                                     <p class="text-sm font-semibold text-gray-600">
                                         Aucune notification
@@ -452,7 +406,6 @@
                             @endforelse
 
                         </div>
-
 
 
                         {{-- ================================================= --}}
@@ -471,13 +424,9 @@
                                     text-center
                                 "
                             >
-
                                 <span class="text-xs font-medium text-gray-500">
-
                                     10 dernières notifications affichées
-
                                 </span>
-
                             </div>
 
                         @endif
@@ -485,7 +434,6 @@
                     </div>
 
                 </div>
-
 
 
                 {{-- ========================================================= --}}
@@ -529,13 +477,11 @@
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20"
                                 >
-
                                     <path
                                         fill-rule="evenodd"
                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                         clip-rule="evenodd"
                                     />
-
                                 </svg>
 
                             </div>
@@ -563,9 +509,7 @@
                                 :href="route('logout')"
                                 onclick="event.preventDefault(); this.closest('form').submit();"
                             >
-
                                 {{ __('Log Out') }}
-
                             </x-dropdown-link>
 
                         </form>
@@ -575,7 +519,6 @@
                 </x-dropdown>
 
             </div>
-
 
 
             {{-- ========================================================= --}}
@@ -638,7 +581,6 @@
     </div>
 
 
-
     {{-- ========================================================= --}}
     {{-- RESPONSIVE MENU --}}
     {{-- ========================================================= --}}
@@ -654,9 +596,7 @@
                 :href="route('dashboard')"
                 :active="request()->routeIs('dashboard')"
             >
-
                 {{ __('Dashboard') }}
-
             </x-responsive-nav-link>
 
         </div>
@@ -667,15 +607,11 @@
             <div class="px-4">
 
                 <div class="text-base font-medium text-gray-800">
-
                     {{ Auth::user()->name }}
-
                 </div>
 
                 <div class="text-sm font-medium text-gray-500">
-
                     {{ Auth::user()->email }}
-
                 </div>
 
             </div>
@@ -684,9 +620,7 @@
             <div class="mt-3 space-y-1">
 
                 <x-responsive-nav-link :href="route('profile.edit')">
-
                     {{ __('Profile') }}
-
                 </x-responsive-nav-link>
 
 
@@ -701,9 +635,7 @@
                         :href="route('logout')"
                         onclick="event.preventDefault(); this.closest('form').submit();"
                     >
-
                         {{ __('Log Out') }}
-
                     </x-responsive-nav-link>
 
                 </form>
@@ -717,36 +649,34 @@
 </nav>
 
 
-
 {{-- ========================================================= --}}
-{{-- AUTO UPDATE NOTIFICATION COUNT --}}
+{{-- NOTIFICATION JAVASCRIPT --}}
 {{-- ========================================================= --}}
 
 <script>
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    /*
+    |--------------------------------------------------------------------------
+    | Update notification badge
+    |--------------------------------------------------------------------------
+    */
+
     function updateNotificationCount() {
 
         fetch("{{ route('notifications.unreadCount') }}", {
-
             method: 'GET',
-
             headers: {
                 'Accept': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest'
             }
-
         })
 
         .then(response => {
 
             if (!response.ok) {
-
-                throw new Error(
-                    'Erreur HTTP : ' + response.status
-                );
-
+                throw new Error('Erreur HTTP : ' + response.status);
             }
 
             return response.json();
@@ -755,8 +685,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
         .then(data => {
 
-            const badge =
-                document.getElementById('notification-badge');
+            const badge = document.getElementById('notification-badge');
+
+            if (!badge) {
+                return;
+            }
+
+            const count = Number(data.count) || 0;
+
+            /*
+            |--------------------------------------------------------------------------
+            | Badge rouge
+            |--------------------------------------------------------------------------
+            */
+
+            if (count > 0) {
+
+                badge.textContent = count;
+                badge.classList.remove('hidden');
+
+            } else {
+
+                badge.textContent = '0';
+                badge.classList.add('hidden');
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Header du dropdown
+            |--------------------------------------------------------------------------
+            */
 
             const headerCount =
                 document.getElementById('notification-header-count');
@@ -765,54 +725,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('notification-all-read');
 
 
-            if (!badge) {
-                return;
-            }
-
-
-            const count = Number(data.count) || 0;
-
-
-            {{-- ================================================= --}}
-            {{-- BADGE ROUGE NAVBAR --}}
-            {{-- ================================================= --}}
-
-            if (count > 0) {
-
-                badge.textContent = count;
-
-                badge.classList.remove('hidden');
-
-            } else {
-
-                badge.textContent = '0';
-
-                badge.classList.add('hidden');
-
-            }
-
-
-            {{-- ================================================= --}}
-            {{-- DROPDOWN COUNT --}}
-            {{-- ================================================= --}}
-
             if (headerCount && allRead) {
 
                 if (count > 0) {
 
                     headerCount.textContent =
-                        count +
-                        ' non lue' +
-                        (count > 1 ? 's' : '');
+                        count + ' non lue' + (count > 1 ? 's' : '');
 
                     headerCount.classList.remove('hidden');
-
                     allRead.classList.add('hidden');
 
                 } else {
 
                     headerCount.classList.add('hidden');
-
                     allRead.classList.remove('hidden');
 
                 }
@@ -833,11 +758,106 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 
-    {{-- Première vérification --}}
+    /*
+    |--------------------------------------------------------------------------
+    | Notification click
+    |--------------------------------------------------------------------------
+    */
+
+    document.querySelectorAll('.notification-form').forEach(function (form) {
+
+        form.addEventListener('submit', function () {
+
+            const isRead = form.dataset.isRead;
+
+            /*
+            |--------------------------------------------------------------------------
+            | Si notification déjà lue → ne rien faire
+            |--------------------------------------------------------------------------
+            */
+
+            if (isRead === '1') {
+                return;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Diminuer immédiatement le badge
+            |--------------------------------------------------------------------------
+            */
+
+            const badge =
+                document.getElementById('notification-badge');
+
+            if (badge) {
+
+                let count = parseInt(badge.textContent) || 0;
+
+                count--;
+
+                if (count <= 0) {
+
+                    badge.textContent = '0';
+                    badge.classList.add('hidden');
+
+                } else {
+
+                    badge.textContent = count;
+
+                }
+
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | Mettre à jour le header
+            |--------------------------------------------------------------------------
+            */
+
+            const headerCount =
+                document.getElementById('notification-header-count');
+
+            const allRead =
+                document.getElementById('notification-all-read');
+
+
+            if (headerCount && allRead) {
+
+                let count = parseInt(
+                    headerCount.textContent
+                ) || 0;
+
+                count--;
+
+                if (count <= 0) {
+
+                    headerCount.classList.add('hidden');
+                    allRead.classList.remove('hidden');
+
+                } else {
+
+                    headerCount.textContent =
+                        count + ' non lue' + (count > 1 ? 's' : '');
+
+                }
+
+            }
+
+        });
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Vérification automatique toutes les 3 secondes
+    |--------------------------------------------------------------------------
+    */
+
     updateNotificationCount();
 
-
-    {{-- Vérification toutes les 3 secondes --}}
     setInterval(updateNotificationCount, 3000);
 
 });
