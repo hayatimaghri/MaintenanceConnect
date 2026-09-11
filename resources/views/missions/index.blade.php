@@ -45,6 +45,10 @@
                                 <span class="text-sm font-semibold text-slate-900">{{ number_format($mission->budget, 2, ',', ' ') }} DH</span>
                             </div>
                             <h3 class="mt-5 text-lg font-extrabold text-slate-950">{{ $mission->titre }}</h3>
+                            <p class="mt-1 text-sm text-slate-500">
+    <span class="font-medium text-slate-700">Entreprise :</span>
+    {{ $mission->user->name }}
+</p>
                             <p class="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{{ $mission->description }}</p>
                             <div class="mt-5 space-y-2 text-sm text-slate-500">
                                 <p><span class="font-medium text-slate-700">Localisation :</span> {{ $mission->localisation }}</p>
