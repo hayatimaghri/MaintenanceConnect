@@ -441,28 +441,6 @@
 
                 @else
 
-                    @if ($user->notifications->isNotEmpty())
-                        <section class="mc-panel overflow-hidden border-sky-100">
-                            <div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
-                                <div>
-                                    <h2 class="font-extrabold text-slate-950">Notifications</h2>
-                                    <p class="mt-1 text-xs text-slate-500">Vous avez {{ $user->notifications->count() }} notification(s).</p>
-                                </div>
-                                <span class="flex h-6 min-w-6 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-bold text-white">
-                                    {{ $user->notifications->count() }}
-                                </span>
-                            </div>
-                            <div class="divide-y divide-slate-100">
-                                @foreach ($user->notifications->sortByDesc('date_notification')->take(5) as $notification)
-                                    <div class="bg-sky-50/60 px-5 py-4">
-                                        <p class="text-sm font-semibold text-slate-800">{{ $notification->message }}</p>
-                                        <p class="mt-1 text-xs text-slate-500">{{ \Carbon\Carbon::parse($notification->date_notification)->diffForHumans() }}</p>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </section>
-                    @endif
-
                     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
                         <div class="mc-panel p-5">

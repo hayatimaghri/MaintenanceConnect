@@ -1,21 +1,28 @@
-<nav x-data="{ open: false, notificationsOpen: false }"
-     class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div class="flex justify-between h-16">
 
-            {{-- ================= LEFT ================= --}}
+            {{-- ========================================================= --}}
+            {{-- LEFT --}}
+            {{-- ========================================================= --}}
+
             <div class="flex">
 
                 {{-- LOGO --}}
                 <div class="shrink-0 flex items-center">
+
                     <a href="{{ route('dashboard') }}">
+
                         <x-application-logo
                             class="block h-9 w-auto fill-current text-gray-800"
                         />
+
                     </a>
+
                 </div>
+
 
                 {{-- DASHBOARD --}}
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -24,7 +31,9 @@
                         :href="route('dashboard')"
                         :active="request()->routeIs('dashboard')"
                     >
+
                         {{ __('Dashboard') }}
+
                     </x-nav-link>
 
                 </div>
@@ -32,10 +41,17 @@
             </div>
 
 
-            {{-- ================= RIGHT ================= --}}
+
+            {{-- ========================================================= --}}
+            {{-- RIGHT --}}
+            {{-- ========================================================= --}}
+
             <div class="hidden sm:flex sm:items-center sm:ms-6">
 
-                {{-- ================= NOTIFICATIONS ================= --}}
+
+                {{-- ===================================================== --}}
+                {{-- NOTIFICATIONS --}}
+                {{-- ===================================================== --}}
 
                 @php
 
@@ -57,13 +73,17 @@
                 @endphp
 
 
-                {{-- CONTAINER NOTIFICATION --}}
+                {{-- NOTIFICATION CONTAINER --}}
                 <div
-                    class="relative me-4"
+                    class="relative me-5"
                     x-data="{ notificationsOpen: false }"
                 >
 
-                    {{-- ================= BOUTON CLOCHE ================= --}}
+
+                    {{-- ================================================= --}}
+                    {{-- BELL BUTTON --}}
+                    {{-- ================================================= --}}
+
                     <button
                         type="button"
                         @click="notificationsOpen = !notificationsOpen"
@@ -71,7 +91,7 @@
                         aria-label="Notifications"
                     >
 
-                        {{-- ICON CLOCHE --}}
+                        {{-- BELL --}}
                         <svg
                             class="h-6 w-6"
                             fill="none"
@@ -90,40 +110,76 @@
                         </svg>
 
 
-                        {{-- ================= BADGE ROUGE ================= --}}
-                        @if ($unreadCount > 0)
+                        {{-- ================================================= --}}
+                        {{-- 🔴 RED NOTIFICATION BADGE --}}
+                        {{-- ================================================= --}}
 
-                            <span
-                                id="notification-badge"
-                                class="absolute -right-1.5 -top-1.5 z-20 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-white bg-red-600 px-1 text-[10px] font-extrabold leading-none text-white shadow-md"
-                            >
-                                {{ $unreadCount }}
-                            </span>
+                        <span
+                            id="notification-badge"
+                            class="
+                                absolute
+                                -top-1
+                                -right-1
+                                z-50
+                                flex
+                                h-5
+                                w-5
+                                items-center
+                                justify-center
+                                rounded-full
+                                bg-red-600
+                                p-0
+                                text-[11px]
+                                font-bold
+                                leading-none
+                                text-white
+                                shadow-sm
+                                ring-2
+                                ring-white
+                                pointer-events-none
 
-                        @else
+                                {{ $unreadCount > 0 ? '' : 'hidden' }}
+                            "
+                        >
 
-                            <span
-                                id="notification-badge"
-                                class="absolute -right-1.5 -top-1.5 z-20 hidden h-5 min-w-5 items-center justify-center rounded-full border-2 border-white bg-red-600 px-1 text-[10px] font-extrabold leading-none text-white shadow-md"
-                            >
-                                0
-                            </span>
+                            {{ $unreadCount }}
 
-                        @endif
+                        </span>
 
                     </button>
 
 
-                    {{-- ================= DROPDOWN ================= --}}
+
+                    {{-- ================================================= --}}
+                    {{-- NOTIFICATION DROPDOWN --}}
+                    {{-- ================================================= --}}
+
                     <div
                         x-show="notificationsOpen"
                         x-transition
                         @click.outside="notificationsOpen = false"
-                        class="absolute right-0 top-full z-[9999] mt-3 w-96 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl"
+                        class="
+                            absolute
+                            right-0
+                            top-full
+                            z-[9999]
+                            mt-3
+                            w-96
+                            overflow-hidden
+                            rounded-2xl
+                            border
+                            border-gray-200
+                            bg-white
+                            shadow-2xl
+                        "
                         style="display: none;"
                     >
 
+
+                        {{-- ================================================= --}}
                         {{-- HEADER --}}
+                        {{-- ================================================= --}}
+
                         <div class="border-b border-gray-100 bg-white px-4 py-4">
 
                             <div class="flex items-center justify-between">
@@ -142,21 +198,46 @@
 
 
                                 {{-- NOMBRE NON LUES --}}
+
                                 <span
                                     id="notification-header-count"
-                                    class="{{ $unreadCount > 0 ? '' : 'hidden' }} rounded-full bg-red-100 px-2.5 py-1 text-xs font-bold text-red-600"
+                                    class="
+                                        {{ $unreadCount > 0 ? '' : 'hidden' }}
+                                        rounded-full
+                                        bg-red-100
+                                        px-2.5
+                                        py-1
+                                        text-xs
+                                        font-bold
+                                        text-red-600
+                                    "
                                 >
+
                                     {{ $unreadCount }}
+
                                     non lue{{ $unreadCount > 1 ? 's' : '' }}
+
                                 </span>
 
 
                                 {{-- TOUT EST LU --}}
+
                                 <span
                                     id="notification-all-read"
-                                    class="{{ $unreadCount > 0 ? 'hidden' : '' }} rounded-full bg-green-100 px-2.5 py-1 text-xs font-bold text-green-600"
+                                    class="
+                                        {{ $unreadCount > 0 ? 'hidden' : '' }}
+                                        rounded-full
+                                        bg-green-100
+                                        px-2.5
+                                        py-1
+                                        text-xs
+                                        font-bold
+                                        text-green-600
+                                    "
                                 >
+
                                     Tout est lu
+
                                 </span>
 
                             </div>
@@ -164,7 +245,11 @@
                         </div>
 
 
-                        {{-- ================= LISTE ================= --}}
+
+                        {{-- ================================================= --}}
+                        {{-- LISTE DES NOTIFICATIONS --}}
+                        {{-- ================================================= --}}
+
                         <div class="max-h-[420px] overflow-y-auto">
 
                             @forelse ($notifications as $notification)
@@ -179,6 +264,7 @@
 
 
                                 {{-- NOTIFICATION --}}
+
                                 <form
                                     method="POST"
                                     action="{{ route('notifications.read', $notification->id_notification) }}"
@@ -186,24 +272,48 @@
 
                                     @csrf
 
+
                                     <button
                                         type="submit"
-                                        class="group w-full border-b border-gray-100 px-4 py-4 text-left transition
-                                        {{ $isRead
-                                            ? 'bg-white hover:bg-gray-50'
-                                            : 'bg-blue-50 hover:bg-blue-100'
-                                        }}"
+                                        class="
+                                            group
+                                            w-full
+                                            border-b
+                                            border-gray-100
+                                            px-4
+                                            py-4
+                                            text-left
+                                            transition
+
+                                            {{ $isRead
+                                                ? 'bg-white hover:bg-gray-50'
+                                                : 'bg-blue-50 hover:bg-blue-100'
+                                            }}
+                                        "
                                     >
 
                                         <div class="flex items-start gap-3">
 
-                                            {{-- ICON NOTIFICATION --}}
+
+                                            {{-- ================================================= --}}
+                                            {{-- ICON --}}
+                                            {{-- ================================================= --}}
+
                                             <div
-                                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full
-                                                {{ $isRead
-                                                    ? 'bg-gray-100 text-gray-500'
-                                                    : 'bg-blue-100 text-blue-600'
-                                                }}"
+                                                class="
+                                                    flex
+                                                    h-10
+                                                    w-10
+                                                    shrink-0
+                                                    items-center
+                                                    justify-center
+                                                    rounded-full
+
+                                                    {{ $isRead
+                                                        ? 'bg-gray-100 text-gray-500'
+                                                        : 'bg-blue-100 text-blue-600'
+                                                    }}
+                                                "
                                             >
 
                                                 <svg
@@ -225,17 +335,27 @@
                                             </div>
 
 
-                                            {{-- CONTENU --}}
+
+                                            {{-- ================================================= --}}
+                                            {{-- CONTENT --}}
+                                            {{-- ================================================= --}}
+
                                             <div class="min-w-0 flex-1">
 
                                                 <p
-                                                    class="text-sm leading-5
-                                                    {{ $isRead
-                                                        ? 'font-medium text-gray-700'
-                                                        : 'font-bold text-blue-800'
-                                                    }}"
+                                                    class="
+                                                        text-sm
+                                                        leading-5
+
+                                                        {{ $isRead
+                                                            ? 'font-medium text-gray-700'
+                                                            : 'font-bold text-blue-800'
+                                                        }}
+                                                    "
                                                 >
+
                                                     {{ $notification->message }}
+
                                                 </p>
 
 
@@ -250,12 +370,24 @@
                                             </div>
 
 
-                                            {{-- POINT NON LUE --}}
+
+                                            {{-- ================================================= --}}
+                                            {{-- BLUE UNREAD DOT --}}
+                                            {{-- ================================================= --}}
+
                                             @if (!$isRead)
 
                                                 <span
-                                                    class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600"
-                                                ></span>
+                                                    class="
+                                                        mt-2
+                                                        h-2.5
+                                                        w-2.5
+                                                        shrink-0
+                                                        rounded-full
+                                                        bg-blue-600
+                                                    "
+                                                >
+                                                </span>
 
                                             @endif
 
@@ -267,11 +399,25 @@
 
                             @empty
 
-                                {{-- AUCUNE NOTIFICATION --}}
+
+                                {{-- ================================================= --}}
+                                {{-- EMPTY --}}
+                                {{-- ================================================= --}}
+
                                 <div class="px-4 py-10 text-center">
 
                                     <div
-                                        class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100"
+                                        class="
+                                            mx-auto
+                                            mb-3
+                                            flex
+                                            h-12
+                                            w-12
+                                            items-center
+                                            justify-center
+                                            rounded-full
+                                            bg-gray-100
+                                        "
                                     >
 
                                         <svg
@@ -308,13 +454,28 @@
                         </div>
 
 
+
+                        {{-- ================================================= --}}
                         {{-- FOOTER --}}
+                        {{-- ================================================= --}}
+
                         @if ($allNotifications->count() > 10)
 
-                            <div class="border-t border-gray-100 bg-gray-50 px-4 py-3 text-center">
+                            <div
+                                class="
+                                    border-t
+                                    border-gray-100
+                                    bg-gray-50
+                                    px-4
+                                    py-3
+                                    text-center
+                                "
+                            >
 
                                 <span class="text-xs font-medium text-gray-500">
+
                                     10 dernières notifications affichées
+
                                 </span>
 
                             </div>
@@ -326,13 +487,35 @@
                 </div>
 
 
-                {{-- ================= PROFILE ================= --}}
+
+                {{-- ========================================================= --}}
+                {{-- PROFILE --}}
+                {{-- ========================================================= --}}
+
                 <x-dropdown align="right" width="48">
 
                     <x-slot name="trigger">
 
                         <button
-                            class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                            class="
+                                inline-flex
+                                items-center
+                                rounded-md
+                                border
+                                border-transparent
+                                bg-white
+                                px-3
+                                py-2
+                                text-sm
+                                font-medium
+                                leading-4
+                                text-gray-500
+                                transition
+                                duration-150
+                                ease-in-out
+                                hover:text-gray-700
+                                focus:outline-none
+                            "
                         >
 
                             <div>
@@ -380,7 +563,9 @@
                                 :href="route('logout')"
                                 onclick="event.preventDefault(); this.closest('form').submit();"
                             >
+
                                 {{ __('Log Out') }}
+
                             </x-dropdown-link>
 
                         </form>
@@ -392,12 +577,29 @@
             </div>
 
 
-            {{-- ================= HAMBURGER ================= --}}
+
+            {{-- ========================================================= --}}
+            {{-- HAMBURGER --}}
+            {{-- ========================================================= --}}
+
             <div class="-me-2 flex items-center sm:hidden">
 
                 <button
                     @click="open = ! open"
-                    class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
+                    class="
+                        inline-flex
+                        items-center
+                        justify-center
+                        rounded-md
+                        p-2
+                        text-gray-400
+                        transition
+                        hover:bg-gray-100
+                        hover:text-gray-500
+                        focus:bg-gray-100
+                        focus:text-gray-500
+                        focus:outline-none
+                    "
                 >
 
                     <svg
@@ -436,7 +638,11 @@
     </div>
 
 
-    {{-- ================= RESPONSIVE MENU ================= --}}
+
+    {{-- ========================================================= --}}
+    {{-- RESPONSIVE MENU --}}
+    {{-- ========================================================= --}}
+
     <div
         :class="{'block': open, 'hidden': ! open}"
         class="hidden sm:hidden"
@@ -448,7 +654,9 @@
                 :href="route('dashboard')"
                 :active="request()->routeIs('dashboard')"
             >
+
                 {{ __('Dashboard') }}
+
             </x-responsive-nav-link>
 
         </div>
@@ -459,11 +667,15 @@
             <div class="px-4">
 
                 <div class="text-base font-medium text-gray-800">
+
                     {{ Auth::user()->name }}
+
                 </div>
 
                 <div class="text-sm font-medium text-gray-500">
+
                     {{ Auth::user()->email }}
+
                 </div>
 
             </div>
@@ -472,7 +684,9 @@
             <div class="mt-3 space-y-1">
 
                 <x-responsive-nav-link :href="route('profile.edit')">
+
                     {{ __('Profile') }}
+
                 </x-responsive-nav-link>
 
 
@@ -487,7 +701,9 @@
                         :href="route('logout')"
                         onclick="event.preventDefault(); this.closest('form').submit();"
                     >
+
                         {{ __('Log Out') }}
+
                     </x-responsive-nav-link>
 
                 </form>
@@ -501,114 +717,129 @@
 </nav>
 
 
-{{-- ================= AUTO UPDATE NOTIFICATION COUNT ================= --}}
+
+{{-- ========================================================= --}}
+{{-- AUTO UPDATE NOTIFICATION COUNT --}}
+{{-- ========================================================= --}}
+
 <script>
 
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
 
-        function updateNotificationCount() {
+    function updateNotificationCount() {
 
-            fetch("{{ route('notifications.unreadCount') }}", {
+        fetch("{{ route('notifications.unreadCount') }}", {
 
-                method: 'GET',
+            method: 'GET',
 
-                headers: {
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
 
-            })
+        })
 
-            .then(response => {
+        .then(response => {
 
-                if (!response.ok) {
-                    throw new Error('Erreur HTTP : ' + response.status);
-                }
+            if (!response.ok) {
 
-                return response.json();
+                throw new Error(
+                    'Erreur HTTP : ' + response.status
+                );
 
-            })
+            }
 
-            .then(data => {
+            return response.json();
 
-                const badge = document.getElementById('notification-badge');
+        })
 
-                const headerCount =
-                    document.getElementById('notification-header-count');
+        .then(data => {
 
-                const allRead =
-                    document.getElementById('notification-all-read');
+            const badge =
+                document.getElementById('notification-badge');
 
+            const headerCount =
+                document.getElementById('notification-header-count');
 
-                if (!badge) {
-                    return;
-                }
-
-
-                const count = Number(data.count) || 0;
+            const allRead =
+                document.getElementById('notification-all-read');
 
 
-                {{-- BADGE NAVBAR --}}
+            if (!badge) {
+                return;
+            }
+
+
+            const count = Number(data.count) || 0;
+
+
+            {{-- ================================================= --}}
+            {{-- BADGE ROUGE NAVBAR --}}
+            {{-- ================================================= --}}
+
+            if (count > 0) {
+
+                badge.textContent = count;
+
+                badge.classList.remove('hidden');
+
+            } else {
+
+                badge.textContent = '0';
+
+                badge.classList.add('hidden');
+
+            }
+
+
+            {{-- ================================================= --}}
+            {{-- DROPDOWN COUNT --}}
+            {{-- ================================================= --}}
+
+            if (headerCount && allRead) {
+
                 if (count > 0) {
 
-                    badge.textContent = count;
+                    headerCount.textContent =
+                        count +
+                        ' non lue' +
+                        (count > 1 ? 's' : '');
 
-                    badge.classList.remove('hidden');
+                    headerCount.classList.remove('hidden');
+
+                    allRead.classList.add('hidden');
 
                 } else {
 
-                    badge.textContent = '0';
+                    headerCount.classList.add('hidden');
 
-                    badge.classList.add('hidden');
-
-                }
-
-
-                {{-- HEADER DROPDOWN --}}
-                if (headerCount && allRead) {
-
-                    if (count > 0) {
-
-                        headerCount.textContent =
-                            count +
-                            ' non lue' +
-                            (count > 1 ? 's' : '');
-
-                        headerCount.classList.remove('hidden');
-
-                        allRead.classList.add('hidden');
-
-                    } else {
-
-                        headerCount.classList.add('hidden');
-
-                        allRead.classList.remove('hidden');
-
-                    }
+                    allRead.classList.remove('hidden');
 
                 }
 
-            })
+            }
 
-            .catch(error => {
+        })
 
-                console.error(
-                    'Erreur lors de la mise à jour des notifications :',
-                    error
-                );
+        .catch(error => {
 
-            });
+            console.error(
+                'Erreur lors de la mise à jour des notifications :',
+                error
+            );
 
-        }
+        });
 
-
-        {{-- PREMIÈRE VÉRIFICATION --}}
-        updateNotificationCount();
+    }
 
 
-        {{-- VÉRIFICATION TOUTES LES 3 SECONDES --}}
-        setInterval(updateNotificationCount, 3000);
+    {{-- Première vérification --}}
+    updateNotificationCount();
 
-    });
+
+    {{-- Vérification toutes les 3 secondes --}}
+    setInterval(updateNotificationCount, 3000);
+
+});
 
 </script>
