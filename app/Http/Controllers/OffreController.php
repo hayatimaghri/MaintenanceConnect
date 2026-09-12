@@ -8,6 +8,7 @@ use App\Models\Offre;
 use App\Models\Mission;
 use App\Events\NewOfferReceived;
 use App\Events\OfferAccepted;
+use App\Events\OfferRefused;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -174,20 +175,23 @@ class OffreController extends Controller
     /**
      * Refuser une offre
      */
-    public function refuse(Offre $offre): RedirectResponse
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
-
-        $this->authorize('refuse', $offre);
-
-        $offre->update([
-            'statut' => 'refusee',
-        ]);
-
-        return redirect()
-            ->route('missions.show', $offre->mission->id_mission)
-            ->with('status', 'Offre refusée avec succès.');
+  public function refuse(Offre $offre): RedirectResponse
+{
+    if (!auth()->check()) {
+        return redirect()->route('login');
     }
+
+    $this->authorize('refuse', $offre);
+
+    $offre->update([
+        'statut' => 'refusee',
+    ]);
+
+    // Notifier le technicien
+    event(new OfferRefused($offre));
+
+    return redirect()
+        ->route('missions.show', $offre->mission->id_mission)
+        ->with('status', 'Offre refusée avec succès.');
+}
 }
