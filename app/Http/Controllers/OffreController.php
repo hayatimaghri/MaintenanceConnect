@@ -130,47 +130,50 @@ class OffreController extends Controller
     /**
      * Accepter une offre
      */
-    public function accept(Offre $offre): RedirectResponse
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
-
-        $this->authorize('accept', $offre);
-
-        $mission = $offre->mission;
-
-        DB::transaction(function () use ($offre, $mission) {
-
-            // 1. Accepter l'offre sélectionnée
-            $offre->update([
-                'statut' => 'acceptee',
-            ]);
-
-            // 2. Affecter la mission
-            $mission->update([
-                'statut' => 'Affectée',
-            ]);
-
-            // 3. Refuser automatiquement les autres offres
-            $mission->offres()
-                ->where('id_offre', '!=', $offre->id_offre)
-                ->where('statut', 'en attente')
-                ->update([
-                    'statut' => 'refusee',
-                ]);
-        });
-
-        // 4. Notifier le technicien sélectionné
-        event(new OfferAccepted($offre));
-
-        return redirect()
-            ->route('missions.show', $mission->id_mission)
-            ->with(
-                'status',
-                'Offre acceptée avec succès. La mission est maintenant affectée.'
-            );
+   public function accept(Offre $offre): RedirectResponse
+{
+    if (!auth()->check()) {
+        return redirect()->route('login');
     }
+
+    $this->authorize('accept', $offre);
+
+    $mission = $offre->mission;
+
+    DB::transaction(function () use ($offre, $mission) {
+
+        $offre->update([
+            'statut' => 'acceptee',
+        ]);
+
+        $mission->update([
+            'statut' => 'Affectée',
+        ]);
+
+        $offresRefusees = $mission->offres()
+            ->where('id_offre', '!=', $offre->id_offre)
+            ->where('statut', 'en attente')
+            ->get();
+
+        foreach ($offresRefusees as $offreRefusee) {
+
+            $offreRefusee->update([
+                'statut' => 'refusee',
+            ]);
+
+            event(new OfferRefused($offreRefusee));
+        }
+    });
+
+    event(new OfferAccepted($offre));
+
+    return redirect()
+        ->route('missions.show', $mission->id_mission)
+        ->with(
+            'status',
+            'Offre acceptée avec succès. La mission est maintenant affectée.'
+        );
+}
 
     /**
      * Refuser une offre

@@ -1,8 +1,11 @@
 <x-app-layout>
 
     <x-slot name="header">
+
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+
             <div>
+
                 <p class="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">
                     Détail de la mission
                 </p>
@@ -10,6 +13,7 @@
                 <h2 class="mt-1 text-2xl font-extrabold tracking-tight text-slate-950">
                     {{ $mission->titre }}
                 </h2>
+
             </div>
 
             <a
@@ -18,8 +22,11 @@
             >
                 Retour aux missions
             </a>
+
         </div>
+
     </x-slot>
+
 
     <div class="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
 
@@ -28,6 +35,7 @@
             <div class="space-y-6 lg:col-span-2">
 
                 {{-- Messages --}}
+
                 @if (session('status'))
                     <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
                         {{ session('status') }}
@@ -42,15 +50,21 @@
 
                 @if ($errors->any())
                     <div class="rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800">
+
                         <ul class="list-disc space-y-1 pl-5">
+
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
+
                         </ul>
+
                     </div>
                 @endif
 
+
                 {{-- Mission --}}
+
                 <article class="mc-panel p-6 sm:p-8">
 
                     <div class="flex flex-wrap items-center gap-3">
@@ -65,7 +79,9 @@
 
                     </div>
 
+
                     {{-- Suivi de la mission --}}
+
                     <div class="mt-6 rounded-xl border border-slate-200 bg-slate-50 p-5">
 
                         <h3 class="text-sm font-bold text-slate-800">
@@ -75,6 +91,7 @@
                         <div class="mt-5 flex items-center justify-between">
 
                             {{-- Publiée --}}
+
                             <div class="text-center">
 
                                 <div class="mx-auto flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
@@ -87,9 +104,12 @@
 
                             </div>
 
+
                             <div class="mx-2 h-1 flex-1 bg-blue-600"></div>
 
+
                             {{-- Affectée --}}
+
                             <div class="text-center">
 
                                 <div
@@ -105,12 +125,15 @@
 
                             </div>
 
+
                             <div
                                 class="mx-2 h-1 flex-1
                                 {{ in_array($mission->statut, ['En cours', 'Terminée']) ? 'bg-blue-600' : 'bg-slate-200' }}"
                             ></div>
 
+
                             {{-- En cours --}}
+
                             <div class="text-center">
 
                                 <div
@@ -126,12 +149,15 @@
 
                             </div>
 
+
                             <div
                                 class="mx-2 h-1 flex-1
                                 {{ $mission->statut === 'Terminée' ? 'bg-blue-600' : 'bg-slate-200' }}"
                             ></div>
 
+
                             {{-- Terminée --}}
+
                             <div class="text-center">
 
                                 <div
@@ -148,9 +174,12 @@
                             </div>
 
                         </div>
+
                     </div>
 
+
                     {{-- Actions entreprise --}}
+
                     @if (
                         auth()->user()->role === 'Admin' ||
                         (
@@ -160,6 +189,7 @@
                     )
 
                         {{-- Affectée → En cours --}}
+
                         @if ($mission->statut === 'Affectée')
 
                             <div class="mt-6 mb-4 flex flex-wrap gap-2">
@@ -168,6 +198,7 @@
                                     method="POST"
                                     action="{{ route('missions.updateStatus', [$mission, 'En cours']) }}"
                                 >
+
                                     @csrf
                                     @method('PUT')
 
@@ -178,12 +209,15 @@
                                     >
                                         Démarrer l’intervention
                                     </button>
+
                                 </form>
+
 
                                 <form
                                     method="POST"
                                     action="{{ route('missions.updateStatus', [$mission, 'Annulée']) }}"
                                 >
+
                                     @csrf
                                     @method('PUT')
 
@@ -194,13 +228,16 @@
                                     >
                                         Annuler la mission
                                     </button>
+
                                 </form>
 
                             </div>
 
                         @endif
 
+
                         {{-- En cours → Terminée --}}
+
                         @if ($mission->statut === 'En cours')
 
                             <div class="mt-6 mb-4 flex flex-wrap gap-2">
@@ -209,6 +246,7 @@
                                     method="POST"
                                     action="{{ route('missions.updateStatus', [$mission, 'Terminée']) }}"
                                 >
+
                                     @csrf
                                     @method('PUT')
 
@@ -219,12 +257,15 @@
                                     >
                                         Terminer la mission
                                     </button>
+
                                 </form>
+
 
                                 <form
                                     method="POST"
                                     action="{{ route('missions.updateStatus', [$mission, 'Annulée']) }}"
                                 >
+
                                     @csrf
                                     @method('PUT')
 
@@ -235,13 +276,16 @@
                                     >
                                         Annuler la mission
                                     </button>
+
                                 </form>
 
                             </div>
 
                         @endif
 
+
                         {{-- Modifier / Supprimer --}}
+
                         @if (in_array($mission->statut, ['Publiée', 'En attente']))
 
                             <div class="mt-6 flex flex-wrap gap-3 border-b border-slate-100 pb-6">
@@ -254,11 +298,13 @@
                                     Modifier la mission
                                 </button>
 
+
                                 <form
                                     method="POST"
                                     action="{{ route('missions.destroy', $mission) }}"
                                     onsubmit="return confirm('Voulez-vous supprimer cette mission ?')"
                                 >
+
                                     @csrf
                                     @method('DELETE')
 
@@ -268,11 +314,14 @@
                                     >
                                         Supprimer la mission
                                     </button>
+
                                 </form>
 
                             </div>
 
+
                             {{-- Formulaire modification mission --}}
+
                             <form
                                 id="mission-edit-form"
                                 x-data="{ submitting: false }"
@@ -288,6 +337,7 @@
                                 <div class="grid gap-5 sm:grid-cols-2">
 
                                     {{-- Titre --}}
+
                                     <div class="sm:col-span-2">
 
                                         <label for="edit-titre" class="mc-label mc-required">
@@ -309,7 +359,9 @@
 
                                     </div>
 
+
                                     {{-- Description --}}
+
                                     <div class="sm:col-span-2">
 
                                         <label for="edit-description" class="mc-label mc-required">
@@ -330,7 +382,9 @@
 
                                     </div>
 
+
                                     {{-- Localisation --}}
+
                                     <div>
 
                                         <label for="edit-localisation" class="mc-label mc-required">
@@ -352,7 +406,9 @@
 
                                     </div>
 
+
                                     {{-- Budget --}}
+
                                     <div>
 
                                         <label for="edit-budget" class="mc-label mc-required">
@@ -376,7 +432,9 @@
 
                                     </div>
 
+
                                     {{-- Priorité --}}
+
                                     <div>
 
                                         <label for="edit-priorite" class="mc-label mc-required">
@@ -419,7 +477,9 @@
 
                                     </div>
 
+
                                     {{-- Date publication --}}
+
                                     <div>
 
                                         <label for="edit-date-publication" class="mc-label mc-required">
@@ -441,7 +501,9 @@
 
                                     </div>
 
+
                                     {{-- Date limite --}}
+
                                     <div>
 
                                         <label for="edit-date-limite" class="mc-label mc-required">
@@ -465,6 +527,7 @@
 
                                 </div>
 
+
                                 <button
                                     type="submit"
                                     :disabled="submitting"
@@ -487,7 +550,9 @@
 
                     @endif
 
+
                     {{-- Informations mission --}}
+
                     <div class="mt-6 grid gap-5 sm:grid-cols-3">
 
                         <div>
@@ -502,6 +567,7 @@
 
                         </div>
 
+
                         <div>
 
                             <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
@@ -513,6 +579,7 @@
                             </p>
 
                         </div>
+
 
                         <div>
 
@@ -528,7 +595,9 @@
 
                     </div>
 
+
                     {{-- Description --}}
+
                     <div class="mt-8 border-t border-slate-100 pt-6">
 
                         <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">
@@ -543,180 +612,235 @@
 
                 </article>
 
+
                 {{-- Offres reçues --}}
-                <section class="mc-panel p-6 sm:p-8">
 
-                    <div class="flex items-center justify-between gap-4">
+                @php
 
-                        <div>
+                    $isAdmin = auth()->user()->role === 'Admin';
 
-                            <h3 class="text-lg font-semibold text-slate-900">
-                                Offres reçues
-                            </h3>
+                    $isOwnerEntreprise =
+                        auth()->user()->role === 'Entreprise' &&
+                        $mission->id_utilisateur === auth()->id();
 
-                            <p class="mt-1 text-sm text-slate-500">
-                                {{ $mission->offres->count() }} offre(s) associée(s)
-                            </p>
+                    $isTechnicien = auth()->user()->role === 'Technicien';
 
-                        </div>
+                    $offresVisibles = ($isAdmin || $isOwnerEntreprise)
+                        ? $mission->offres
+                        : $mission->offres->where('id_utilisateur', auth()->id());
 
-                    </div>
+                @endphp
 
-                    <div class="mt-6 space-y-4">
 
-                        @forelse ($mission->offres as $offre)
+                @if ($isAdmin || $isOwnerEntreprise || ($isTechnicien && $offresVisibles->count() > 0))
 
-                            <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-5">
+                    <section class="mc-panel p-6 sm:p-8">
 
-                                <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                        <div class="flex items-center justify-between gap-4">
 
-                                    <div>
+                            <div>
 
-                                        <p class="text-base font-semibold text-slate-900">
-                                            {{ number_format($offre->prix, 2, ',', ' ') }} DH
-                                        </p>
+                                <h3 class="text-lg font-semibold text-slate-900">
+                                    {{ $isTechnicien ? 'Mon offre' : 'Offres reçues' }}
+                                </h3>
 
-                                        <p class="mt-1 text-sm text-slate-500">
-                                            Délai : {{ $offre->delai }} jour(s)
-                                            · {{ $offre->statut }}
-                                        </p>
-
-                                    </div>
-
-                                    {{-- Actions entreprise --}}
-                                    @can('accept', $offre)
-
-                                        <div class="flex flex-wrap gap-2">
-
-                                            {{-- Accepter --}}
-                                            <form
-                                                method="POST"
-                                                action="{{ route('offres.accept', $offre) }}"
-                                            >
-
-                                                @csrf
-                                                @method('PUT')
-
-                                                <button
-                                                    type="submit"
-                                                    onclick="return confirm('Voulez-vous accepter cette offre ?')"
-                                                    class="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-700"
-                                                >
-                                                    Accepter l'offre
-                                                </button>
-
-                                            </form>
-
-                                            {{-- Refuser --}}
-                                            <form
-                                                method="POST"
-                                                action="{{ route('offres.refuse', $offre) }}"
-                                            >
-
-                                                @csrf
-                                                @method('PUT')
-
-                                                <button
-                                                    type="submit"
-                                                    onclick="return confirm('Voulez-vous refuser cette offre ?')"
-                                                    class="rounded-lg bg-rose-600 px-3 py-2 text-sm font-bold text-white hover:bg-rose-700"
-                                                >
-                                                    Refuser l'offre
-                                                </button>
-
-                                            </form>
-
-                                        </div>
-
-                                    @endcan
-
-                                </div>
-
-                                {{-- Message --}}
-                                <p class="mt-4 text-sm leading-6 text-slate-600">
-                                    {{ $offre->message }}
+                                <p class="mt-1 text-sm text-slate-500">
+                                    {{ $offresVisibles->count() }}
+                                    {{ $isTechnicien ? 'offre associée' : 'offre(s) associée(s)' }}
                                 </p>
-
-                                {{-- Pré-diagnostic --}}
-                                @if ($offre->pre_diagnostic)
-
-                                    <div class="mt-4 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
-
-                                        <span class="font-semibold text-slate-700">
-                                            Pré-diagnostic :
-                                        </span>
-
-                                        {{ $offre->pre_diagnostic }}
-
-                                    </div>
-
-                                @endif
-
-                                {{-- Actions technicien --}}
-                                @can('update', $offre)
-
-                                    <div class="mt-5 flex flex-wrap gap-3 border-t border-slate-200 pt-4">
-
-                                        <a
-                                            href="{{ route('offres.edit', $offre) }}"
-                                            class="rounded-lg border border-sky-200 px-3 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50"
-                                        >
-                                            Modifier mon offre
-                                        </a>
-
-                                        @can('delete', $offre)
-
-                                            <form
-                                                method="POST"
-                                                action="{{ route('offres.destroy', $offre) }}"
-                                                onsubmit="return confirm('Voulez-vous annuler cette offre ?')"
-                                            >
-
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button
-                                                    type="submit"
-                                                    class="rounded-lg border border-indigo-200 px-3 py-2 text-sm font-semibold text-indigo-700 hover:bg-indigo-50"
-                                                >
-                                                    Annuler mon offre
-                                                </button>
-
-                                            </form>
-
-                                        @endcan
-
-                                    </div>
-
-                                @endcan
 
                             </div>
 
-                        @empty
+                        </div>
 
-                            <p class="rounded-xl bg-slate-50 px-4 py-5 text-sm text-slate-500">
-                                Aucune offre n'a encore été envoyée.
-                            </p>
 
-                        @endforelse
+                        <div class="mt-6 space-y-4">
 
-                    </div>
+                            @forelse ($offresVisibles as $offre)
 
-                </section>
+                                <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-5">
+
+                                    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+
+                                        <div>
+
+                                            <p class="text-base font-semibold text-slate-900">
+                                                {{ number_format($offre->prix, 2, ',', ' ') }} DH
+                                            </p>
+
+                                            <p class="mt-1 text-sm text-slate-500">
+                                                Délai : {{ $offre->delai }} jour(s)
+                                                · {{ $offre->statut }}
+                                            </p>
+
+                                        </div>
+
+
+                                        {{-- Actions entreprise --}}
+
+                                        @if ($isAdmin || $isOwnerEntreprise)
+
+                                            @can('accept', $offre)
+
+                                                <div class="flex flex-wrap gap-2">
+
+                                                    {{-- Accepter --}}
+
+                                                    <form
+                                                        method="POST"
+                                                        action="{{ route('offres.accept', $offre) }}"
+                                                    >
+
+                                                        @csrf
+                                                        @method('PUT')
+
+                                                        <button
+                                                            type="submit"
+                                                            onclick="return confirm('Voulez-vous accepter cette offre ?')"
+                                                            class="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-700"
+                                                        >
+                                                            Accepter l'offre
+                                                        </button>
+
+                                                    </form>
+
+
+                                                    {{-- Refuser --}}
+
+                                                    <form
+                                                        method="POST"
+                                                        action="{{ route('offres.refuse', $offre) }}"
+                                                    >
+
+                                                        @csrf
+                                                        @method('PUT')
+
+                                                        <button
+                                                            type="submit"
+                                                            onclick="return confirm('Voulez-vous refuser cette offre ?')"
+                                                            class="rounded-lg bg-rose-600 px-3 py-2 text-sm font-bold text-white hover:bg-rose-700"
+                                                        >
+                                                            Refuser l'offre
+                                                        </button>
+
+                                                    </form>
+
+                                                </div>
+
+                                            @endcan
+
+                                        @endif
+
+                                    </div>
+
+
+                                    {{-- Message --}}
+
+                                    @if ($offre->message)
+
+                                        <p class="mt-4 text-sm leading-6 text-slate-600">
+                                            {{ $offre->message }}
+                                        </p>
+
+                                    @endif
+
+
+                                    {{-- Pré-diagnostic --}}
+
+                                    @if ($offre->pre_diagnostic)
+
+                                        <div class="mt-4 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
+
+                                            <span class="font-semibold text-slate-700">
+                                                Pré-diagnostic :
+                                            </span>
+
+                                            {{ $offre->pre_diagnostic }}
+
+                                        </div>
+
+                                    @endif
+
+
+                                    {{-- Actions technicien --}}
+
+                                    @if ($isTechnicien)
+
+                                        @can('update', $offre)
+
+                                            <div class="mt-5 flex flex-wrap gap-3 border-t border-slate-200 pt-4">
+
+                                                <a
+                                                    href="{{ route('offres.edit', $offre) }}"
+                                                    class="rounded-lg border border-sky-200 px-3 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50"
+                                                >
+                                                    Modifier mon offre
+                                                </a>
+
+
+                                                @can('delete', $offre)
+
+                                                    <form
+                                                        method="POST"
+                                                        action="{{ route('offres.destroy', $offre) }}"
+                                                        onsubmit="return confirm('Voulez-vous annuler cette offre ?')"
+                                                    >
+
+                                                        @csrf
+                                                        @method('DELETE')
+
+                                                        <button
+                                                            type="submit"
+                                                            class="rounded-lg border border-indigo-200 px-3 py-2 text-sm font-semibold text-indigo-700 hover:bg-indigo-50"
+                                                        >
+                                                            Annuler mon offre
+                                                        </button>
+
+                                                    </form>
+
+                                                @endcan
+
+                                            </div>
+
+                                        @endcan
+
+                                    @endif
+
+                                </div>
+
+                            @empty
+
+                                <p class="rounded-xl bg-slate-50 px-4 py-5 text-sm text-slate-500">
+                                    Aucune offre n'a encore été envoyée.
+                                </p>
+
+                            @endforelse
+
+                        </div>
+
+                    </section>
+
+                @endif
+
 
                 {{-- Evaluation --}}
+
                 @include('evaluations.evaluation', ['mission' => $mission])
 
             </div>
 
+
             {{-- Formulaire offre technicien --}}
+
             @if (
                 in_array($mission->statut, ['Publiée', 'En attente']) &&
                 auth()->user()->role === 'Technicien'
             )
 
                 <aside class="mc-panel h-fit p-6 sm:p-8">
+
                     @include('offres._form', ['mission' => $mission])
+
                 </aside>
 
             @endif
