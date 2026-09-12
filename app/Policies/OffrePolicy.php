@@ -18,11 +18,23 @@ class OffrePolicy
 
     public function view(User $user, Offre $offre): bool
     {
-        return in_array($user->role, [
-            'Admin',
-            'Entreprise',
-            'Technicien'
-        ]);
+        // Admin peut voir toutes les offres
+        if ($user->role === 'Admin') {
+            return true;
+        }
+
+        // Entreprise peut voir uniquement les offres
+        // des missions qu'elle a créées
+        if ($user->role === 'Entreprise') {
+            return $offre->mission->id_utilisateur === $user->id;
+        }
+
+        // Technicien peut voir uniquement son propre offre
+        if ($user->role === 'Technicien') {
+            return $offre->id_utilisateur === $user->id;
+        }
+
+        return false;
     }
 
     public function create(User $user): bool
