@@ -49,13 +49,7 @@
 
                             <div class="flex items-center gap-3 lg:hidden">
 
-                                <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-700 text-sm font-black text-white">
-                                    M
-                                </span>
-
-                                <span class="text-sm font-extrabold text-slate-900">
-                                    Maintenance<span class="text-sky-700">Connect</span>
-                                </span>
+                                <x-application-logo compact />
 
                                 <button
                                     type="button"

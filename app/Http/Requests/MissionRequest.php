@@ -16,7 +16,7 @@ class MissionRequest extends FormRequest
             'priorite' => ['required', 'string', 'in:Faible,Moyenne,Haute'],
            
             'date_publication' => ['required', 'date'],
-            'date_limite' => ['required', 'date'],
+            'date_limite' => ['required', 'date', 'after:date_publication'],
         ];
     }
 }

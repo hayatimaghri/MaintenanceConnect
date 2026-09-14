@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use App\Events\OfferAccepted;
 use App\Models\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CreateOfferAcceptedNotification implements ShouldQueue
+class CreateOfferAcceptedNotification
 {
     public function handle(OfferAccepted $event): void
     {

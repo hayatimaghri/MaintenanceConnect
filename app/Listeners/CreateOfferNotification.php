@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use App\Events\NewOfferReceived;
 use App\Models\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CreateOfferNotification implements ShouldQueue
+class CreateOfferNotification
 {
     /**
      * Handle the event.

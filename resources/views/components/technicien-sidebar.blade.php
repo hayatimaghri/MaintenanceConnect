@@ -2,9 +2,8 @@
 
 <aside class="hidden w-64 shrink-0 flex-col bg-[#0b1f3a] text-white lg:flex">
     <div class="flex h-20 items-center border-b border-white/10 px-6">
-        <a href="{{ route('dashboard') }}" class="flex items-center gap-3">
-            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500 text-lg font-black text-white">M</span>
-            <span class="text-base font-extrabold tracking-tight">Maintenance<span class="text-sky-400">Connect</span></span>
+        <a href="{{ route('dashboard') }}">
+            <x-application-logo dark />
         </a>
     </div>
 

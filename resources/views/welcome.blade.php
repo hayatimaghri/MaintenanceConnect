@@ -34,22 +34,8 @@
             <nav class="h-20 flex items-center justify-between">
 
                 <!-- Logo -->
-                <a href="/" class="flex items-center gap-2">
-                    <div class="w-9 h-9 bg-sky-700 rounded-lg flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white"
-                             fill="none"
-                             stroke="currentColor"
-                             viewBox="0 0 24 24">
-                            <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.3-3.3a6 6 0 01-7.6 7.6L7.5 19.5a2.1 2.1 0 01-3-3l5.9-5.9a6 6 0 017.6-7.6l-3.3 3.3z"/>
-                        </svg>
-                    </div>
-
-                    <span class="font-bold text-sky-900 text-lg">
-                        Maintenance<span class="text-sky-600">Connect</span>
-                    </span>
+                <a href="/" class="flex items-center gap-3">
+                    <x-application-logo />
                 </a>
 
                 <!-- Menu -->
@@ -588,34 +574,8 @@
                 <!-- Brand -->
                 <div>
 
-                    <div class="flex items-center gap-2">
-
-                        <div class="w-10 h-10
-                                    bg-sky-700
-                                    rounded-lg
-                                    flex items-center
-                                    justify-center">
-
-                            <svg class="w-6 h-6 text-white"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.3-3.3a6 6 0 01-7.6 7.6L7.5 19.5a2.1 2.1 0 01-3-3l5.9-5.9a6 6 0 017.6-7.6l-3.3 3.3z"/>
-
-                            </svg>
-
-                        </div>
-
-                        <span class="text-xl font-bold">
-                            Maintenance<span class="text-sky-400">
-                                Connect
-                            </span>
-                        </span>
-
+                    <div class="flex items-center gap-3">
+                        <x-application-logo dark />
                     </div>
 
                     <p class="mt-5 text-slate-400

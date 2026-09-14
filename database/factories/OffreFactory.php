@@ -24,8 +24,8 @@ class OffreFactory extends Factory
             'delai' => fake()->numberBetween(1, 10),
             'statut' => fake()->randomElement([
                 'en attente',
-                'acceptée',
-                'refusée',
+                'acceptee',
+                'refusee',
             ]),
             'date_offre' => fake()->dateTimeBetween('-15 days', 'now')->format('Y-m-d H:i:s'),
             'id_mission' => null,

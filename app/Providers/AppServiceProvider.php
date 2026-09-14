@@ -12,6 +12,8 @@ use App\Policies\MissionPolicy;
 use App\Policies\OffrePolicy;
 use App\Events\OfferAccepted;
 use App\Listeners\CreateOfferAcceptedNotification;
+use App\Events\NewOfferReceived;
+use App\Listeners\CreateOfferNotification;
 
 use App\Events\OfferRefused;
 use App\Listeners\CreateOfferRefusedNotification;
@@ -44,6 +46,11 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(
             OfferAccepted::class,
             CreateOfferAcceptedNotification::class
+        );
+
+        Event::listen(
+            NewOfferReceived::class,
+            CreateOfferNotification::class
         );
 
         Event::listen(

@@ -10,6 +10,7 @@ use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Models\Notification;
 
 
 
@@ -18,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth'])
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -31,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('technicien/competences/{competence}', [CompetenceController::class, 'destroy'])->name('competences.destroy');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('missions', [MissionController::class, 'index'])->name('missions.index');
     Route::get('missions/create', [MissionController::class, 'create'])->name('missions.create');
     Route::post('missions', [MissionController::class, 'store'])->name('missions.store');
@@ -78,8 +79,10 @@ Route::delete('technicien/experiences/{experience}', [ExperienceController::clas
 });
 });
 
-Route::post('/notifications/{notification}/read', function ($notification) {
-    session()->put("notification_read_{$notification}", true);
+Route::post('/notifications/{notification}/read', function (Notification $notification) {
+    abort_unless($notification->id_utilisateur === auth()->id(), 403);
+
+    session()->put("notification_read_{$notification->id_notification}", true);
 
     return back();
 })->middleware('auth')->name('notifications.read');

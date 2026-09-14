@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('message');
             $table->integer('delai');
 
-            $table->string('statut')->default('en_attente');
+            $table->string('statut')->default('en attente');
             $table->dateTime('date_offre');
              $table->foreignId('id_mission')
                 ->constrained('missions', 'id_mission')

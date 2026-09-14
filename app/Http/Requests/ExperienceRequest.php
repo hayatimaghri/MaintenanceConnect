@@ -12,7 +12,7 @@ class ExperienceRequest extends FormRequest
             'poste' => ['required', 'string', 'max:255'],
             'entreprise' => ['required', 'string', 'max:255'],
             'date_debut' => ['required', 'date'],
-            'date_fin' => ['nullable', 'date'],
+            'date_fin' => ['nullable', 'date', 'after_or_equal:date_debut'],
             'description' => ['nullable', 'string'],
         ];
     }

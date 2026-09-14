@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('budget', 10, 2);
 
             $table->string('priorite');
-            $table->string('statut')->default('ouverte');
+            $table->string('statut')->default('Publiée');
 
             $table->dateTime('date_publication');
             $table->dateTime('date_limite');

@@ -17,6 +17,8 @@ class MissionController extends Controller
         Gate::authorize('viewAny', Mission::class);
 
         $search = request('search');
+        $priority = request('priorite');
+        $status = request('statut');
 
         $missions = Mission::with('user')
             ->when($search, function ($query, $search) {
@@ -26,10 +28,12 @@ class MissionController extends Controller
                         ->orWhere('localisation', 'like', "%{$search}%");
                 });
             })
+            ->when($priority, fn ($query, $priority) => $query->where('priorite', $priority))
+            ->when($status, fn ($query, $status) => $query->where('statut', $status))
             ->latest()
             ->get();
 
-        return view('missions.index', compact('missions', 'search'));
+        return view('missions.index', compact('missions', 'search', 'priority', 'status'));
     }
 
     public function create(): View|RedirectResponse

@@ -23,13 +23,7 @@
                     <div class="flex h-20 items-center justify-between px-5 sm:px-8">
 
                         <div class="flex items-center gap-3 lg:hidden">
-                            <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-700 text-sm font-black text-white">
-                                M
-                            </span>
-
-                            <span class="text-sm font-extrabold text-slate-900">
-                                Maintenance<span class="text-sky-700">Connect</span>
-                            </span>
+                            <x-application-logo compact />
                         </div>
 
                         <div class="hidden lg:block">

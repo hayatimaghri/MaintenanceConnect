@@ -8,7 +8,7 @@ return new class extends Migration
     public function up(): void
     {
         DB::table('competences')
-            ->where('description', 'Comp??tence utilis??e pour les interventions de maintenance industrielle.')
+            ->where('description', 'like', 'Comp%tence utilis%e pour les interventions de maintenance industrielle.')
             ->update(['description' => 'Compétence utilisée pour les interventions de maintenance industrielle.']);
 
         $names = [

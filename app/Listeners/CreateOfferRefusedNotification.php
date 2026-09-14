@@ -4,9 +4,8 @@ namespace App\Listeners;
 
 use App\Events\OfferRefused;
 use App\Models\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CreateOfferRefusedNotification implements ShouldQueue
+class CreateOfferRefusedNotification
 {
     public function handle(OfferRefused $event): void
     {

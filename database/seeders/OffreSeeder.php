@@ -25,7 +25,7 @@ class OffreSeeder extends Seeder
                     ][$index],
                     'pre_diagnostic' => 'Après analyse de la description, la panne pourrait être liée à un défaut d’alimentation électrique ou à un composant de commande.',
                     'delai' => 2 + $index,
-                    'statut' => $index === 0 && $mission->statut === 'Terminée' ? 'acceptée' : 'en attente',
+                    'statut' => $index === 0 && $mission->statut === 'Terminée' ? 'acceptee' : 'en attente',
                     'date_offre' => now()->subDays(3 - $index)->format('Y-m-d H:i:s'),
                     'id_mission' => $mission->id_mission,
                     'id_utilisateur' => $technicien->id,

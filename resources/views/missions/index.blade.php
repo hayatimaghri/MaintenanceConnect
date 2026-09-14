@@ -22,11 +22,25 @@
                 <div class="mb-6 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800">{{ session('error') }}</div>
             @endif
 
-            <form method="GET" action="{{ route('missions.index') }}" class="mc-panel mb-6 flex flex-col gap-3 p-4 sm:flex-row">
+            <form method="GET" action="{{ route('missions.index') }}" class="mc-panel mb-6 flex flex-col gap-3 p-4 sm:flex-row sm:flex-wrap">
                 <label for="search" class="sr-only">Rechercher une mission</label>
-                <input id="search" name="search" type="search" value="{{ $search ?? '' }}" placeholder="Rechercher par spécialité, titre ou localisation" class="mc-input flex-1">
+                <input id="search" name="search" type="search" value="{{ $search ?? '' }}" placeholder="Rechercher par titre ou localisation" class="mc-input min-w-60 flex-1">
+                <label for="priorite" class="sr-only">Filtrer par priorité</label>
+                <select id="priorite" name="priorite" class="mc-input sm:w-auto">
+                    <option value="">Toutes les priorités</option>
+                    @foreach (['Faible', 'Moyenne', 'Haute'] as $prioriteOption)
+                        <option value="{{ $prioriteOption }}" @selected(($priority ?? '') === $prioriteOption)>{{ $prioriteOption }}</option>
+                    @endforeach
+                </select>
+                <label for="statut" class="sr-only">Filtrer par statut</label>
+                <select id="statut" name="statut" class="mc-input sm:w-auto">
+                    <option value="">Tous les statuts</option>
+                    @foreach (['Publiée', 'En attente', 'Affectée', 'En cours', 'Terminée', 'Annulée'] as $statutOption)
+                        <option value="{{ $statutOption }}" @selected(($status ?? '') === $statutOption)>{{ $statutOption }}</option>
+                    @endforeach
+                </select>
                 <button type="submit" class="inline-flex min-h-11 items-center justify-center rounded-lg bg-sky-700 px-4 py-2.5 text-sm font-bold text-white hover:bg-sky-800">Rechercher</button>
-                @if (!empty($search))
+                @if (!empty($search) || !empty($priority) || !empty($status))
                     <a href="{{ route('missions.index') }}" class="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:border-sky-600 hover:text-sky-700">Effacer</a>
                 @endif
             </form>

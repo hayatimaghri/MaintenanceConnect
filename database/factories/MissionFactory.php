@@ -36,7 +36,7 @@ class MissionFactory extends Factory
                 'Moyenne',
                 'Haute',
             ]),
-            'statut' => 'ouverte',
+            'statut' => 'Publiée',
             'date_publication' => fake()->dateTimeBetween('-30 days', 'now')->format('Y-m-d H:i:s'),
             'date_limite' => fake()->dateTimeBetween('+7 days', '+45 days')->format('Y-m-d H:i:s'),
             'id_utilisateur' => null,

@@ -79,7 +79,7 @@ Présentez votre proposition pour cette mission. </p>
             </div>
         </div>
 
-        <input type="hidden" name="statut" value="en_attente">
+        <input type="hidden" name="statut" value="en attente">
 
         <button type="submit"
                 :disabled="submitting"
