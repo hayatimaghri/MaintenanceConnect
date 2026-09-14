@@ -12,8 +12,17 @@ class Notification extends Model
         'type',
         'message',
         'date_notification',
+        'read_at',
         'id_utilisateur'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'date_notification' => 'datetime',
+            'read_at' => 'datetime',
+        ];
+    }
 
     public function user(): BelongsTo
     {

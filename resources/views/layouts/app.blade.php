@@ -21,9 +21,7 @@
             $currentUser = auth()->user();
 
             $unreadCount = $currentUser->notifications->filter(function ($notification) {
-                return !session()->has(
-                    "notification_read_{$notification->id_notification}"
-                );
+                return $notification->read_at === null;
             })->count();
         @endphp
 
@@ -146,9 +144,7 @@
                                             )
 
                                                 @php
-                                                    $isRead = session()->has(
-                                                        "notification_read_{$notification->id_notification}"
-                                                    );
+                                                    $isRead = $notification->read_at !== null;
                                                 @endphp
 
                                                 <form

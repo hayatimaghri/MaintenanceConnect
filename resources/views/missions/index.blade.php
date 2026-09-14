@@ -35,7 +35,7 @@
                 <label for="statut" class="sr-only">Filtrer par statut</label>
                 <select id="statut" name="statut" class="mc-input sm:w-auto">
                     <option value="">Tous les statuts</option>
-                    @foreach (['Publiée', 'En attente', 'Affectée', 'En cours', 'Terminée', 'Annulée'] as $statutOption)
+                    @foreach (['Publiée', 'Affectée', 'En cours', 'Terminée', 'Annulée'] as $statutOption)
                         <option value="{{ $statutOption }}" @selected(($status ?? '') === $statutOption)>{{ $statutOption }}</option>
                     @endforeach
                 </select>

@@ -42,8 +42,8 @@ class OffreController extends Controller
 
         // Une mission Affectée, En cours, Terminée ou Annulée
         // n'accepte plus de nouvelles offres.
-        if (!in_array($mission->statut, ['Publiée', 'En attente'], true)) {
-            return redirect()
+if ($mission->statut !== 'Publiée') {            
+    return redirect()
                 ->route('missions.show', $mission->id_mission)
                 ->with(
                     'error',
@@ -161,7 +161,8 @@ class OffreController extends Controller
                 'statut' => 'refusee',
             ]);
 
-            event(new OfferRefused($offreRefusee));
+        
+            
         }
     });
 

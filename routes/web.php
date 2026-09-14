@@ -82,7 +82,9 @@ Route::delete('technicien/experiences/{experience}', [ExperienceController::clas
 Route::post('/notifications/{notification}/read', function (Notification $notification) {
     abort_unless($notification->id_utilisateur === auth()->id(), 403);
 
-    session()->put("notification_read_{$notification->id_notification}", true);
+    if ($notification->read_at === null) {
+        $notification->update(['read_at' => now()]);
+    }
 
     return back();
 })->middleware('auth')->name('notifications.read');

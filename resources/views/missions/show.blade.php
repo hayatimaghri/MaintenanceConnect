@@ -286,7 +286,7 @@
 
                         {{-- Modifier / Supprimer --}}
 
-                        @if (in_array($mission->statut, ['Publiée', 'En attente']))
+                        @if (in_array($mission->statut, ['Publiée']))
 
                             <div class="mt-6 flex flex-wrap gap-3 border-b border-slate-100 pb-6">
 

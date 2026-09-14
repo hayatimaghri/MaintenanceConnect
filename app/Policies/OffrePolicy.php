@@ -61,6 +61,8 @@ class OffrePolicy
         return $user->role === 'Entreprise'
             && $offre->mission->id_utilisateur === $user->id
             && $offre->statut === 'en attente';
+            && $offre->mission->statut === 'Publiée';
+            
     }
 
     public function refuse(User $user, Offre $offre): bool
