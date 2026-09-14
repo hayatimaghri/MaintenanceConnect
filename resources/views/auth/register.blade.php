@@ -52,23 +52,7 @@
                        class="text-sm text-slate-600 hover:text-[#0f4c81] transition">
                         Accueil
                     </a>
-
-                    <a href="#"
-                       class="text-sm text-slate-600 hover:text-[#0f4c81] transition">
-                        Missions
-                    </a>
-
-                    <a href="#"
-                       class="text-sm text-slate-600 hover:text-[#0f4c81] transition">
-                        Techniciens
-                    </a>
-
-                    <a href="#"
-                       class="text-sm text-slate-600 hover:text-[#0f4c81] transition">
-                        À propos
-                    </a>
-
-                </nav>
+                  </nav>
 
 
                 <!-- LOGIN -->

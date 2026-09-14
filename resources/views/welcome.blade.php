@@ -46,17 +46,7 @@
                         Accueil
                     </a>
 
-                    <a href="#missions"
-                       class="text-slate-700 hover:text-sky-700 transition">
-                        Missions
-                    </a>
-
-                    <a href="#techniciens"
-                       class="text-slate-700 hover:text-sky-700 transition">
-                        Techniciens
-                    </a>
-
-                    <a href="#apropos"
+                     <a href="#apropos"
                        class="text-slate-700 hover:text-sky-700 transition">
                         À propos
                     </a>
@@ -64,6 +54,10 @@
                     <a href="#fonctionnement"
                        class="text-slate-700 hover:text-sky-700 transition">
                         Comment ça marche ?
+                    </a>
+                    <a href="#techniciens"
+                       class="text-slate-700 hover:text-sky-700 transition">
+                        Contact
                     </a>
                 </div>
 
