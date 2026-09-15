@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>MaintenanceConnect - Maintenance industrielle au Maroc</title>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -23,470 +23,863 @@
             }
         }
     </script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 88px;
+        }
+    </style>
 </head>
 
-<body class="bg-white text-slate-800">
+<body class="bg-white text-slate-800 antialiased">
 
-    <!-- ================= NAVBAR ================= -->
-    <header class="border-b border-slate-200 bg-white">
+    <!-- =====================================================
+         NAVBAR FIXE
+    ====================================================== -->
+
+    <header class="fixed top-0 left-0 right-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
+
         <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
-            <nav class="h-20 flex items-center justify-between">
+            <nav class="h-[76px] flex items-center justify-between">
 
-                <!-- Logo -->
-                <a href="/" class="flex items-center gap-3">
+                <!-- LOGO -->
+                <a href="/" class="flex items-center shrink-0">
                     <x-application-logo />
                 </a>
 
-                <!-- Menu -->
-                <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <!-- MENU DESKTOP -->
+                <div class="hidden md:flex items-center gap-8 text-sm font-semibold">
 
                     <a href="#accueil"
-                       class="text-slate-700 hover:text-sky-700 transition">
+                       class="text-slate-700 hover:text-[#0f4c81] transition">
                         Accueil
                     </a>
 
-                     <a href="#apropos"
-                       class="text-slate-700 hover:text-sky-700 transition">
+                    <a href="#fonctionnement"
+                       class="text-slate-700 hover:text-[#0f4c81] transition">
+                        Comment ça marche ?
+                    </a>
+
+                    <a href="#apropos"
+                       class="text-slate-700 hover:text-[#0f4c81] transition">
                         À propos
                     </a>
 
-                    <a href="#fonctionnement"
-                       class="text-slate-700 hover:text-sky-700 transition">
-                        Comment ça marche ?
-                    </a>
-                    <a href="#techniciens"
-                       class="text-slate-700 hover:text-sky-700 transition">
+                    <a href="#contact"
+                       class="text-slate-700 hover:text-[#0f4c81] transition">
                         Contact
                     </a>
+
                 </div>
 
-                <!-- Buttons -->
+                <!-- ACTIONS -->
                 <div class="flex items-center gap-3">
 
                     <a href="/login"
-                       class="hidden sm:inline-flex px-5 py-2.5 rounded-lg
-                              border border-slate-300 text-sm font-semibold
-                              text-slate-700 hover:bg-slate-50 transition">
+                       class="hidden sm:inline-flex items-center justify-center
+                              rounded-lg border border-slate-300
+                              px-5 py-2.5
+                              text-sm font-semibold text-slate-700
+                              hover:border-[#0f4c81]
+                              hover:text-[#0f4c81]
+                              transition">
+
                         Se connecter
+
                     </a>
 
                     <a href="/register"
-                       class="inline-flex px-5 py-2.5 rounded-lg
-                              bg-yellow-400 text-slate-900 text-sm
-                              font-bold hover:bg-yellow-300 transition shadow-sm">
+                       class="inline-flex items-center justify-center
+                              rounded-lg
+                              bg-yellow-400
+                              px-5 py-2.5
+                              text-sm font-bold text-slate-900
+                              shadow-sm
+                              hover:bg-yellow-300
+                              transition">
+
                         S'inscrire
+
                     </a>
 
                 </div>
+
             </nav>
+
         </div>
+
     </header>
 
 
-    <!-- ================= HERO ================= -->
-    <section id="accueil" class="bg-slate-50">
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <main id="accueil" class="pt-[76px]">
 
-            <div class="grid lg:grid-cols-2 gap-12 items-center py-14 lg:py-20">
+        <section class="relative min-h-[650px] overflow-hidden">
 
-                <!-- Text -->
-                <div>
+            <!-- IMAGE PLEINE LARGEUR -->
 
-                    <div class="inline-flex items-center gap-2
-                                bg-sky-100 text-sky-800
-                                px-4 py-2 rounded-full
-                                text-sm font-semibold mb-6">
+            <img
+                src="{{ asset('images/hero.jpg') }}"
+                alt="Technicien de maintenance industrielle"
+                class="absolute inset-0 h-full w-full object-cover"
+            >
 
-                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            <!-- OVERLAY -->
 
-                        Plateforme de maintenance industrielle
-                    </div>
+            <div class="absolute inset-0 bg-[#082f49]/70"></div>
 
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl
-                               font-extrabold text-slate-900
-                               leading-tight">
+            <div class="absolute inset-0
+                        bg-gradient-to-r
+                        from-[#082f49]/95
+                        via-[#082f49]/70
+                        to-[#082f49]/20">
+            </div>
 
-                        Trouvez le technicien
-                        <span class="text-sky-700">
-                            industriel idéal
-                        </span>
-                        pour vos équipements industriels
-                    </h1>
 
-                    <p class="mt-6 text-lg text-slate-600
-                              leading-relaxed max-w-xl">
+            <!-- CONTENU HERO -->
 
-                        MaintenanceConnect met en relation les entreprises
-                        industrielles marocaines avec des techniciens qualifiés
-                        et disponibles pour répondre rapidement à leurs besoins
-                        de maintenance.
-                    </p>
+            <div class="relative z-10 flex min-h-[650px] items-center">
 
-                    <!-- Buttons -->
-                    <div class="flex flex-wrap gap-4 mt-8">
+                <div class="max-w-7xl mx-auto w-full px-6 lg:px-10">
 
-                        <a href="/missions/create"
-                           class="inline-flex items-center gap-2
-                                  px-7 py-3.5
-                                  bg-sky-700 text-white
-                                  rounded-lg font-semibold
-                                  hover:bg-sky-800 transition shadow-lg">
+                    <div class="max-w-3xl">
 
-                            Publier une mission
 
-                            <svg class="w-5 h-5"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                            </svg>
+                        <!-- TITRE -->
 
-                        </a>
+                        <h1 class="mt-7
+                                   text-4xl sm:text-5xl lg:text-6xl
+                                   font-extrabold
+                                   leading-[1.08]
+                                   tracking-tight
+                                   text-white">
 
-                        <a href="/missions"
-                           class="inline-flex items-center
-                                  px-7 py-3.5
-                                  bg-white
-                                  border border-slate-300
-                                  text-slate-700
-                                  rounded-lg font-semibold
-                                  hover:border-sky-600
-                                  hover:text-sky-700
-                                  transition">
+                            La maintenance industrielle,
 
-                            Trouver une mission
-                        </a>
+                            <span class="text-sky-300">
+                                plus simple.
+                            </span>
+
+                        </h1>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <p class="mt-6
+                                  max-w-2xl
+                                  text-base sm:text-lg
+                                  leading-8
+                                  text-slate-200">
+
+                            MaintenanceConnect facilite la mise en relation
+                            entre les entreprises industrielles marocaines
+                            et des techniciens qualifiés pour leurs besoins
+                            de maintenance.
+
+                        </p>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="mt-8 flex flex-wrap gap-3">
+
+                            <a href="/missions/create"
+                               class="inline-flex items-center gap-2
+                                      rounded-lg
+                                      bg-yellow-400
+                                      px-6 py-3.5
+                                      text-sm font-bold
+                                      text-slate-900
+                                      shadow-lg
+                                      hover:bg-yellow-300
+                                      transition">
+
+                                Publier une mission
+
+                                <svg class="h-4 w-4"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+
+                                </svg>
+
+                            </a>
+
+
+                            <a href="/missions"
+                               class="inline-flex items-center justify-center
+                                      rounded-lg
+                                      border border-white/40
+                                      bg-white/10
+                                      px-6 py-3.5
+                                      text-sm font-semibold
+                                      text-white
+                                      backdrop-blur-sm
+                                      hover:bg-white/20
+                                      transition">
+
+                                Trouver une mission
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- MINI INFORMATIONS -->
+
+                        <div class="mt-8 flex flex-wrap items-center
+                                    gap-x-7 gap-y-3
+                                    text-sm text-slate-200">
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="flex h-6 w-6 items-center justify-center
+                                             rounded-full
+                                             bg-green-400/20
+                                             text-green-300">
+                                    ✓
+                                </span>
+
+                                Techniciens qualifiés
+
+                            </div>
+
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="flex h-6 w-6 items-center justify-center
+                                             rounded-full
+                                             bg-green-400/20
+                                             text-green-300">
+                                    ✓
+                                </span>
+
+                                Réponse rapide
+
+                            </div>
+
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="flex h-6 w-6 items-center justify-center
+                                             rounded-full
+                                             bg-green-400/20
+                                             text-green-300">
+                                    ✓
+                                </span>
+
+                                Partout au Maroc
+
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
+            </div>
 
-                <!-- Image -->
-                <div class="relative">
 
-                    <div class="rounded-3xl overflow-hidden shadow-2xl">
+            <!-- INDICATEUR BAS -->
 
-                        <img
-                            src="{{ asset('images/hero.jpg') }}"
-                            alt="Technicien de maintenance industrielle"
-                            class="w-full h-[430px] object-cover"
-                        >
+            <div class="absolute bottom-7 left-1/2
+                        hidden -translate-x-1/2
+                        sm:flex flex-col items-center gap-2
+                        text-white/70">
 
-                    </div>
+                <span class="text-xs font-medium">
+                    Découvrir
+                </span>
 
-                    <!-- Floating card -->
-                    <div class="absolute -bottom-7 left-6
-                                bg-white rounded-2xl shadow-xl
-                                p-5 w-64">
+                <svg class="h-5 w-5"
+                     fill="none"
+                     stroke="currentColor"
+                     viewBox="0 0 24 24">
 
-                        <div class="flex items-center gap-3">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 9l-7 7-7-7"/>
 
-                            <div class="w-11 h-11 rounded-full
-                                        bg-sky-100 flex items-center
-                                        justify-center">
+                </svg>
 
-                                <svg class="w-6 h-6 text-sky-700"
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             STATISTIQUES
+        ====================================================== -->
+
+        <section class="relative bg-white">
+
+            <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+                            gap-4
+                            -mt-6
+                            relative z-20">
+
+                    <!-- MISSIONS -->
+
+                    <div class="group rounded-2xl
+                                border border-slate-200
+                                bg-white
+                                p-6
+                                shadow-lg
+                                shadow-slate-200/40
+                                transition
+                                hover:-translate-y-1
+                                hover:shadow-xl">
+
+                        <div class="flex items-center justify-between">
+
+                            <div class="flex h-11 w-11 items-center justify-center
+                                        rounded-xl
+                                        bg-[#e0f2fe]
+                                        text-[#075985]">
+
+                                <svg class="h-5 w-5"
                                      fill="none"
                                      stroke="currentColor"
                                      viewBox="0 0 24 24">
+
                                     <path stroke-linecap="round"
                                           stroke-linejoin="round"
-                                          stroke-width="2"
-                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                          stroke-width="1.8"
+                                          d="M9 12h6m-6 4h4M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+
                                 </svg>
 
                             </div>
 
-                            <div>
-                                <p class="text-sm text-slate-500">
-                                    Techniciens de maintenance
+                            <span class="text-xs font-semibold
+                                         text-green-600
+                                         bg-green-50
+                                         rounded-full
+                                         px-2.5 py-1">
+
+                                Actives
+
+                            </span>
+
+                        </div>
+
+                        <div class="mt-5">
+
+                            <p class="text-3xl font-extrabold tracking-tight
+                                      text-[#075985]">
+
+                                +1200
+
+                            </p>
+
+                            <p class="mt-1 text-sm font-medium text-slate-500">
+
+                                Missions publiées
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TECHNICIENS -->
+
+                    <div class="group rounded-2xl
+                                border border-slate-200
+                                bg-white
+                                p-6
+                                shadow-lg
+                                shadow-slate-200/40
+                                transition
+                                hover:-translate-y-1
+                                hover:shadow-xl">
+
+                        <div class="flex items-center justify-between">
+
+                            <div class="flex h-11 w-11 items-center justify-center
+                                        rounded-xl
+                                        bg-[#e0f2fe]
+                                        text-[#075985]">
+
+                                <svg class="h-5 w-5"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="1.8"
+                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM4 21a8 8 0 0116 0"/>
+
+                                </svg>
+
+                            </div>
+
+                            <span class="text-xs font-semibold
+                                         text-green-600
+                                         bg-green-50
+                                         rounded-full
+                                         px-2.5 py-1">
+
+                                Vérifiés
+
+                            </span>
+
+                        </div>
+
+                        <div class="mt-5">
+
+                            <p class="text-3xl font-extrabold tracking-tight
+                                      text-[#075985]">
+
+                                +850
+
+                            </p>
+
+                            <p class="mt-1 text-sm font-medium text-slate-500">
+
+                                Techniciens
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SATISFACTION -->
+
+                    <div class="group rounded-2xl
+                                border border-slate-200
+                                bg-white
+                                p-6
+                                shadow-lg
+                                shadow-slate-200/40
+                                transition
+                                hover:-translate-y-1
+                                hover:shadow-xl">
+
+                        <div class="flex items-center justify-between">
+
+                            <div class="flex h-11 w-11 items-center justify-center
+                                        rounded-xl
+                                        bg-yellow-50
+                                        text-yellow-500">
+
+                                <svg class="h-5 w-5"
+                                     fill="currentColor"
+                                     viewBox="0 0 24 24">
+
+                                    <path d="M12 2.5l2.95 5.98 6.6.96-4.78 4.66 1.13 6.58L12 17.57l-5.9 3.11 1.13-6.58-4.78-4.66 6.6-.96L12 2.5z"/>
+
+                                </svg>
+
+                            </div>
+
+                            <span class="text-xs font-semibold
+                                         text-yellow-600
+                                         bg-yellow-50
+                                         rounded-full
+                                         px-2.5 py-1">
+
+                                Excellent
+
+                            </span>
+
+                        </div>
+
+                        <div class="mt-5">
+
+                            <p class="text-3xl font-extrabold tracking-tight
+                                      text-[#075985]">
+
+                                98%
+
+                            </p>
+
+                            <p class="mt-1 text-sm font-medium text-slate-500">
+
+                                Satisfaction
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RÉPONSE -->
+
+                    <div class="group rounded-2xl
+                                border border-slate-200
+                                bg-white
+                                p-6
+                                shadow-lg
+                                shadow-slate-200/40
+                                transition
+                                hover:-translate-y-1
+                                hover:shadow-xl">
+
+                        <div class="flex items-center justify-between">
+
+                            <div class="flex h-11 w-11 items-center justify-center
+                                        rounded-xl
+                                        bg-[#e0f2fe]
+                                        text-[#075985]">
+
+                                <svg class="h-5 w-5"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     viewBox="0 0 24 24">
+
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="1.8"
+                                          d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+
+                                </svg>
+
+                            </div>
+
+                            <span class="text-xs font-semibold
+                                         text-green-600
+                                         bg-green-50
+                                         rounded-full
+                                         px-2.5 py-1">
+
+                                Rapide
+
+                            </span>
+
+                        </div>
+
+                        <div class="mt-5">
+
+                            <p class="text-3xl font-extrabold tracking-tight
+                                      text-[#075985]">
+
+                                24h
+
+                            </p>
+
+                            <p class="mt-1 text-sm font-medium text-slate-500">
+
+                                Réponse moyenne
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             COMMENT ÇA MARCHE
+        ====================================================== -->
+
+        <section id="fonctionnement" class="bg-white py-20">
+
+            <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+                <div class="max-w-2xl">
+
+                    <h2 class="text-3xl sm:text-4xl
+                               font-extrabold text-slate-950">
+                        Comment ça marche ?
+                    </h2>
+
+                    <p class="mt-4 text-slate-500 leading-7">
+                        Une démarche simple pour trouver rapidement
+                        le professionnel adapté à votre besoin.
+                    </p>
+
+                </div>
+
+
+                <div class="mt-12 grid md:grid-cols-3 gap-6">
+
+                    <!-- 01 -->
+
+                    <div class="rounded-2xl border border-slate-200
+                                bg-white p-7
+                                shadow-sm
+                                hover:-translate-y-1
+                                hover:shadow-md
+                                transition">
+
+                        <div class="flex h-11 w-11 items-center justify-center
+                                    rounded-xl bg-[#e0f2fe]
+                                    text-sm font-extrabold text-[#075985]">
+
+                            01
+
+                        </div>
+
+                        <h3 class="mt-6 text-lg font-bold text-slate-900">
+                            Publiez votre mission
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-6 text-slate-500">
+                            Décrivez votre besoin de maintenance et
+                            indiquez les informations nécessaires.
+                        </p>
+
+                    </div>
+
+
+                    <!-- 02 -->
+
+                    <div class="rounded-2xl border border-slate-200
+                                bg-white p-7
+                                shadow-sm
+                                hover:-translate-y-1
+                                hover:shadow-md
+                                transition">
+
+                        <div class="flex h-11 w-11 items-center justify-center
+                                    rounded-xl bg-[#e0f2fe]
+                                    text-sm font-extrabold text-[#075985]">
+
+                            02
+
+                        </div>
+
+                        <h3 class="mt-6 text-lg font-bold text-slate-900">
+                            Comparez les offres
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-6 text-slate-500">
+                            Consultez les offres, les compétences,
+                            les prix et les délais proposés.
+                        </p>
+
+                    </div>
+
+
+                    <!-- 03 -->
+
+                    <div class="rounded-2xl border border-slate-200
+                                bg-white p-7
+                                shadow-sm
+                                hover:-translate-y-1
+                                hover:shadow-md
+                                transition">
+
+                        <div class="flex h-11 w-11 items-center justify-center
+                                    rounded-xl bg-[#e0f2fe]
+                                    text-sm font-extrabold text-[#075985]">
+
+                            03
+
+                        </div>
+
+                        <h3 class="mt-6 text-lg font-bold text-slate-900">
+                            Choisissez votre technicien
+                        </h3>
+
+                        <p class="mt-3 text-sm leading-6 text-slate-500">
+                            Sélectionnez le professionnel qui correspond
+                            le mieux à votre besoin.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             À PROPOS
+        ====================================================== -->
+
+        <section id="apropos" class="bg-slate-50 py-20">
+
+            <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+                    <div class="overflow-hidden rounded-3xl
+                                border border-slate-200
+                                bg-white shadow-lg">
+
+                        <img
+                            src="{{ asset('images/maintenance.jpg') }}"
+                            alt="Maintenance industrielle"
+                            class="h-[380px] w-full object-cover"
+                        >
+
+                    </div>
+
+
+                    <div>
+
+                        <p class="text-sm font-bold uppercase tracking-wider
+                                  text-[#075985]">
+                            À propos
+                        </p>
+
+                        <h2 class="mt-3 text-3xl sm:text-4xl
+                                   font-extrabold text-slate-950">
+
+                            Une solution pensée pour
+                            la maintenance industrielle
+
+                        </h2>
+
+                        <p class="mt-5 leading-7 text-slate-600">
+
+                            MaintenanceConnect permet aux entreprises
+                            industrielles de trouver plus facilement
+                            des techniciens qualifiés pour leurs
+                            interventions de maintenance.
+
+                        </p>
+
+
+                        <div class="mt-7 space-y-4">
+
+                            <div class="flex gap-3">
+
+                                <span class="flex h-6 w-6 shrink-0 items-center justify-center
+                                             rounded-full bg-green-100
+                                             text-sm font-bold text-green-600">
+                                    ✓
+                                </span>
+
+                                <p class="text-slate-600">
+                                    Techniciens qualifiés et disponibles
                                 </p>
 
-                                <p class="text-2xl font-bold text-slate-900">
-                                    Au Maroc
+                            </div>
+
+
+                            <div class="flex gap-3">
+
+                                <span class="flex h-6 w-6 shrink-0 items-center justify-center
+                                             rounded-full bg-green-100
+                                             text-sm font-bold text-green-600">
+                                    ✓
+                                </span>
+
+                                <p class="text-slate-600">
+                                    Mise en relation rapide
                                 </p>
+
+                            </div>
+
+
+                            <div class="flex gap-3">
+
+                                <span class="flex h-6 w-6 shrink-0 items-center justify-center
+                                             rounded-full bg-green-100
+                                             text-sm font-bold text-green-600">
+                                    ✓
+                                </span>
+
+                                <p class="text-slate-600">
+                                    Gestion simple des missions
+                                </p>
+
                             </div>
 
                         </div>
 
-                        <div class="flex mt-3">
-                            <span class="text-yellow-400">★</span>
-                            <span class="text-yellow-400">★</span>
-                            <span class="text-yellow-400">★</span>
-                            <span class="text-yellow-400">★</span>
-                            <span class="text-slate-300">★</span>
-                        </div>
-
                     </div>
 
                 </div>
 
             </div>
 
-
-            <!-- Statistics -->
-            <div class="border-t border-slate-200
-                        py-8">
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-
-                    <div>
-                        <p class="text-2xl font-bold text-slate-900">
-                            +1200
-                        </p>
-                        <p class="text-sm text-slate-500">
-                            Missions publiées
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="text-2xl font-bold text-slate-900">
-                            +850
-                        </p>
-                        <p class="text-sm text-slate-500">
-                            Techniciens de maintenance au Maroc
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="text-2xl font-bold text-slate-900">
-                            98%
-                        </p>
-                        <p class="text-sm text-slate-500">
-                            Satisfaction client
-                        </p>
-                    </div>
-
-                    <div>
-                        <p class="text-2xl font-bold text-slate-900">
-                            24h
-                        </p>
-                        <p class="text-sm text-slate-500">
-                            Temps de réponse moyen
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- ================= COMMENT ÇA MARCHE ================= -->
-    <section id="fonctionnement" class="py-20 bg-white">
+        <!-- =====================================================
+             CTA
+        ====================================================== -->
 
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <section class="bg-white py-20">
 
-            <div class="text-center mb-14">
+            <div class="max-w-6xl mx-auto px-6">
 
-                <p class="text-sky-700 font-semibold mb-2">
-                    Simple et rapide
-                </p>
+                <div class="overflow-hidden rounded-3xl
+                            bg-[#082f49]
+                            px-7 py-14
+                            text-center
+                            sm:px-12">
 
-                <h2 class="text-3xl md:text-4xl
-                           font-bold text-slate-900">
-                    Comment ça marche ?
-                </h2>
-
-                <p class="mt-4 text-slate-500">
-                    En 3 étapes simples, trouvez le technicien qu'il vous faut.
-                </p>
-
-            </div>
-
-
-            <div class="grid md:grid-cols-3 gap-10">
-
-                <!-- Step 1 -->
-                <div class="text-center">
-
-                    <div class="mx-auto w-16 h-16
-                                rounded-2xl bg-sky-100
-                                flex items-center justify-center
-                                mb-5">
-
-                        <span class="text-2xl font-bold text-sky-700">
-                            01
-                        </span>
-
-                    </div>
-
-                    <h3 class="text-lg font-bold text-slate-900">
-                        Publiez votre mission
-                    </h3>
-
-                    <p class="mt-3 text-slate-500 leading-relaxed">
-                        Décrivez votre besoin de maintenance et recevez
-                        rapidement des offres de techniciens qualifiés au Maroc.
+                    <p class="text-sm font-bold uppercase tracking-wider
+                              text-[#e0f2fe]">
+                        MaintenanceConnect
                     </p>
 
-                </div>
+                    <h2 class="mt-3 text-3xl sm:text-4xl
+                               font-extrabold text-white">
 
+                        Prêt à trouver votre prochain
+                        technicien ?
 
-                <!-- Step 2 -->
-                <div class="text-center">
-
-                    <div class="mx-auto w-16 h-16
-                                rounded-2xl bg-sky-100
-                                flex items-center justify-center
-                                mb-5">
-
-                        <span class="text-2xl font-bold text-sky-700">
-                            02
-                        </span>
-
-                    </div>
-
-                    <h3 class="text-lg font-bold text-slate-900">
-                        Comparez les offres
-                    </h3>
-
-                    <p class="mt-3 text-slate-500 leading-relaxed">
-                        Consultez les profils, compétences, prix et délais
-                        proposés par les différents techniciens.
-                    </p>
-
-                </div>
-
-
-                <!-- Step 3 -->
-                <div class="text-center">
-
-                    <div class="mx-auto w-16 h-16
-                                rounded-2xl bg-sky-100
-                                flex items-center justify-center
-                                mb-5">
-
-                        <span class="text-2xl font-bold text-sky-700">
-                            03
-                        </span>
-
-                    </div>
-
-                    <h3 class="text-lg font-bold text-slate-900">
-                        Choisissez votre technicien
-                    </h3>
-
-                    <p class="mt-3 text-slate-500 leading-relaxed">
-                        Sélectionnez le professionnel adapté à votre besoin
-                        et suivez votre intervention.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= POURQUOI MAINTENANCECONNECT ================= -->
-    <section id="apropos" class="py-20 bg-slate-50">
-
-        <div class="max-w-7xl mx-auto px-6 lg:px-10">
-
-            <div class="grid lg:grid-cols-3 gap-6">
-
-                <!-- Image -->
-                <div class="lg:col-span-1
-                            rounded-3xl overflow-hidden
-                            min-h-[350px]">
-
-                    <img
-                        src="{{ asset('images/maintenance.jpg') }}"
-                        alt="Maintenance industrielle"
-                        class="w-full h-full object-cover"
-                    >
-
-                </div>
-
-
-                <!-- Text -->
-                <div class="bg-white rounded-3xl p-8
-                            border border-slate-100">
-
-                    <span class="text-sky-700 font-semibold text-sm">
-                        POURQUOI NOUS CHOISIR ?
-                    </span>
-
-                    <h2 class="mt-3 text-3xl font-bold
-                               text-slate-900">
-                        Pourquoi choisir
-                        MaintenanceConnect ?
                     </h2>
 
-                    <div class="mt-7 space-y-5">
+                    <p class="mx-auto mt-4 max-w-2xl
+                              leading-7 text-sky-100">
 
-                        <div class="flex gap-3">
-                            <span class="text-green-500 font-bold">✓</span>
-                            <p class="text-slate-600">
-                                Techniciens qualifiés et vérifiés
-                            </p>
-                        </div>
+                        Publiez votre mission et connectez-vous
+                        avec des professionnels de la maintenance
+                        industrielle.
 
-                        <div class="flex gap-3">
-                            <span class="text-green-500 font-bold">✓</span>
-                            <p class="text-slate-600">
-                                Réponse rapide à vos besoins
-                            </p>
-                        </div>
-
-                        <div class="flex gap-3">
-                            <span class="text-green-500 font-bold">✓</span>
-                            <p class="text-slate-600">
-                                Paiement sécurisé
-                            </p>
-                        </div>
-
-                        <div class="flex gap-3">
-                            <span class="text-green-500 font-bold">✓</span>
-                            <p class="text-slate-600">
-                                Support client dédié
-                            </p>
-                        </div>
-
-                    </div>
-
-                </div>
+                    </p>
 
 
-                <!-- Testimonial -->
-                <div class="bg-sky-800 rounded-3xl p-8
-                            text-white flex flex-col justify-between">
+                    <div class="mt-8 flex flex-wrap justify-center gap-3">
 
-                    <div>
+                        <a href="/register"
+                           class="rounded-lg
+                                  bg-yellow-400
+                                  px-6 py-3.5
+                                  text-sm font-bold text-slate-900
+                                  hover:bg-yellow-300
+                                  transition">
 
-                        <div class="text-yellow-400 text-3xl">
-                            "
-                        </div>
+                            Créer un compte
 
-                        <p class="mt-4 text-lg leading-relaxed">
-                            Grâce à MaintenanceConnect, nous avons trouvé
-                            un technicien compétent en moins de 24h.
-                            Le service est rapide et efficace !
-                        </p>
+                        </a>
 
-                    </div>
 
-                    <div class="mt-8">
+                        <a href="/login"
+                           class="rounded-lg
+                                  border border-white/30
+                                  px-6 py-3.5
+                                  text-sm font-semibold text-white
+                                  hover:bg-white/10
+                                  transition">
 
-                        <p class="font-bold">
-                            Karim B.
-                        </p>
+                            Se connecter
 
-                        <p class="text-sky-200 text-sm">
-                            Responsable Maintenance
-                        </p>
+                        </a>
 
                     </div>
 
@@ -494,235 +887,157 @@
 
             </div>
 
-        </div>
+        </section>
 
-    </section>
-
-
-    <!-- ================= CTA ================= -->
-    <section class="py-20">
-
-        <div class="max-w-6xl mx-auto px-6">
-
-            <div class="bg-sky-800 rounded-3xl
-                        px-8 py-14 md:px-16
-                        text-center text-white">
-
-                <h2 class="text-3xl md:text-4xl
-                           font-bold">
-                    Besoin d'un technicien ?
-                </h2>
-
-                <p class="mt-4 text-sky-100
-                          max-w-2xl mx-auto">
-                    Publiez votre mission dès maintenant et trouvez
-                    rapidement le professionnel adapté à votre besoin.
-                </p>
-
-                <div class="mt-8 flex flex-wrap
-                            justify-center gap-4">
-
-                    <a href="/missions/create"
-                       class="px-7 py-3.5
-                              bg-yellow-400
-                              text-slate-900
-                              rounded-lg
-                              font-bold
-                              hover:bg-yellow-300
-                              transition">
-
-                        Publier une mission
-                    </a>
-
-                    <a href="/register"
-                       class="px-7 py-3.5
-                              border border-white/40
-                              text-white
-                              rounded-lg
-                              font-semibold
-                              hover:bg-white/10
-                              transition">
-
-                        Créer un compte
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
+    </main>
 
 
-    <!-- ================= FOOTER ================= -->
-    <footer class="bg-slate-950 text-white">
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
-        <div class="max-w-7xl mx-auto
-                    px-6 lg:px-10
-                    pt-16 pb-8">
+    <footer id="contact" class="bg-slate-950 text-white">
 
-            <div class="grid md:grid-cols-2
-                        lg:grid-cols-4 gap-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 py-14">
 
-                <!-- Brand -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+                <!-- LOGO -->
+
                 <div>
 
-                    <div class="flex items-center gap-3">
-                        <x-application-logo dark />
-                    </div>
+                    <x-application-logo dark />
 
-                    <p class="mt-5 text-slate-400
-                              leading-relaxed text-sm">
+                    <p class="mt-5 max-w-xs
+                              text-sm leading-6
+                              text-slate-400">
 
-                            La plateforme qui connecte les entreprises
-                            industrielles marocaines aux meilleurs techniciens
+                        La plateforme qui connecte les entreprises
+                        industrielles marocaines aux techniciens
                         de maintenance.
+
                     </p>
 
                 </div>
 
 
-                <!-- Navigation -->
+                <!-- NAVIGATION -->
+
                 <div>
 
-                    <h3 class="font-bold text-lg">
+                    <h3 class="font-bold">
                         Navigation
                     </h3>
 
-                    <ul class="mt-5 space-y-3 text-sm">
+                    <div class="mt-5 space-y-3 text-sm">
 
-                        <li>
-                            <a href="#accueil"
-                               class="text-slate-400 hover:text-white">
-                                Accueil
-                            </a>
-                        </li>
+                        <a href="#accueil"
+                           class="block text-slate-400 hover:text-white transition">
+                            Accueil
+                        </a>
 
-                        <li>
-                            <a href="#missions"
-                               class="text-slate-400 hover:text-white">
-                                Missions
-                            </a>
-                        </li>
+                        <a href="#fonctionnement"
+                           class="block text-slate-400 hover:text-white transition">
+                            Comment ça marche ?
+                        </a>
 
-                        <li>
-                            <a href="#techniciens"
-                               class="text-slate-400 hover:text-white">
-                                Techniciens
-                            </a>
-                        </li>
+                        <a href="#apropos"
+                           class="block text-slate-400 hover:text-white transition">
+                            À propos
+                        </a>
 
-                        <li>
-                            <a href="#apropos"
-                               class="text-slate-400 hover:text-white">
-                                À propos
-                            </a>
-                        </li>
-
-                    </ul>
+                    </div>
 
                 </div>
 
 
-                <!-- Services -->
+                <!-- SERVICES -->
+
                 <div>
 
-                    <h3 class="font-bold text-lg">
+                    <h3 class="font-bold">
                         Services
                     </h3>
 
-                    <ul class="mt-5 space-y-3 text-sm">
+                    <div class="mt-5 space-y-3 text-sm">
 
-                        <li class="text-slate-400">
+                        <p class="text-slate-400">
                             Publication de missions
-                        </li>
+                        </p>
 
-                        <li class="text-slate-400">
+                        <p class="text-slate-400">
                             Recherche de techniciens
-                        </li>
+                        </p>
 
-                        <li class="text-slate-400">
+                        <p class="text-slate-400">
                             Gestion des interventions
-                        </li>
+                        </p>
 
-                        <li class="text-slate-400">
+                        <p class="text-slate-400">
                             Évaluation des prestations
-                        </li>
+                        </p>
 
-                    </ul>
+                    </div>
 
                 </div>
 
 
-                <!-- Contact -->
+                <!-- CONTACT -->
+
                 <div>
 
-                    <h3 class="font-bold text-lg">
+                    <h3 class="font-bold">
                         Contact
                     </h3>
 
-                    <ul class="mt-5 space-y-4 text-sm">
+                    <div class="mt-5 space-y-3 text-sm">
 
-                        <li class="flex gap-3 text-slate-400">
+                        <p class="text-slate-400">
+                            📍 Maroc
+                        </p>
 
-                            <span>📍</span>
+                        <p class="text-slate-400">
+                            ✉ contact@maintenanceconnect.ma
+                        </p>
 
-                            <span>
-                                Maroc
-                            </span>
+                        <p class="text-slate-400">
+                            ☎ +212 5 XX XX XX XX
+                        </p>
 
-                        </li>
-
-                        <li class="flex gap-3 text-slate-400">
-
-                            <span>✉</span>
-
-                            <span>
-                                contact@maintenanceconnect.ma
-                            </span>
-
-                        </li>
-
-                        <li class="flex gap-3 text-slate-400">
-
-                            <span>☎</span>
-
-                            <span>
-                                +212 5 XX XX XX XX
-                            </span>
-
-                        </li>
-
-                    </ul>
+                    </div>
 
                 </div>
 
             </div>
 
 
-            <!-- Bottom -->
-            <div class="border-t border-slate-800
-                        mt-12 pt-7
-                        flex flex-col md:flex-row
-                        justify-between
-                        items-center gap-4">
+            <div class="mt-12 flex flex-col md:flex-row
+                        items-center justify-between gap-4
+                        border-t border-slate-800
+                        pt-6">
 
                 <p class="text-sm text-slate-500">
+
                     © {{ date('Y') }} MaintenanceConnect.
                     Tous droits réservés.
+
                 </p>
+
 
                 <div class="flex gap-6 text-sm">
 
                     <a href="#"
-                       class="text-slate-500 hover:text-white">
+                       class="text-slate-500 hover:text-white transition">
+
                         Politique de confidentialité
+
                     </a>
 
                     <a href="#"
-                       class="text-slate-500 hover:text-white">
+                       class="text-slate-500 hover:text-white transition">
+
                         Conditions d'utilisation
+
                     </a>
 
                 </div>

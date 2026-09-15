@@ -60,7 +60,7 @@ class OffrePolicy
     {
         return $user->role === 'Entreprise'
             && $offre->mission->id_utilisateur === $user->id
-            && $offre->statut === 'en attente';
+            && $offre->statut === 'en attente'
             && $offre->mission->statut === 'Publiée';
             
     }
