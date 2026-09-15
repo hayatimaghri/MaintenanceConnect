@@ -655,167 +655,175 @@
 
 
                         <div class="mt-6 space-y-4">
+@forelse ($offresVisibles as $offre)
 
-                            @forelse ($offresVisibles as $offre)
+    <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-5">
 
-                                <div class="rounded-xl border border-slate-200 bg-slate-50/50 p-5">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
 
-                                    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
 
-                                        <div>
+                <p class="text-base font-semibold text-slate-900">
+                    {{ number_format($offre->prix, 2, ',', ' ') }} DH
+                </p>
 
-                                            <p class="text-base font-semibold text-slate-900">
-                                                {{ number_format($offre->prix, 2, ',', ' ') }} DH
-                                            </p>
+                <p class="mt-1 text-sm text-slate-500">
+                    Délai : {{ $offre->delai }} jour(s)
+                    · {{ $offre->statut }}
+                </p>
 
-                                            <p class="mt-1 text-sm text-slate-500">
-                                                Délai : {{ $offre->delai }} jour(s)
-                                                · {{ $offre->statut }}
-                                            </p>
-
-                                        </div>
-
-
-                                        {{-- Actions entreprise --}}
-
-                                        @if ($isAdmin || $isOwnerEntreprise)
-
-                                            @can('accept', $offre)
-
-                                                <div class="flex flex-wrap gap-2">
-
-                                                    {{-- Accepter --}}
-
-                                                    <form
-                                                        method="POST"
-                                                        action="{{ route('offres.accept', $offre) }}"
-                                                    >
-
-                                                        @csrf
-                                                        @method('PUT')
-
-                                                        <button
-                                                            type="submit"
-                                                            onclick="return confirm('Voulez-vous accepter cette offre ?')"
-                                                            class="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-700"
-                                                        >
-                                                            Accepter l'offre
-                                                        </button>
-
-                                                    </form>
+            </div>
 
 
-                                                    {{-- Refuser --}}
+            {{-- Actions entreprise --}}
 
-                                                    <form
-                                                        method="POST"
-                                                        action="{{ route('offres.refuse', $offre) }}"
-                                                    >
+            @if ($isOwnerEntreprise)
 
-                                                        @csrf
-                                                        @method('PUT')
+                @can('accept', $offre)
 
-                                                        <button
-                                                            type="submit"
-                                                            onclick="return confirm('Voulez-vous refuser cette offre ?')"
-                                                            class="rounded-lg bg-rose-600 px-3 py-2 text-sm font-bold text-white hover:bg-rose-700"
-                                                        >
-                                                            Refuser l'offre
-                                                        </button>
+                    <div class="flex flex-wrap gap-2">
 
-                                                    </form>
+                        {{-- Voir le profil du technicien --}}
 
-                                                </div>
-
-                                            @endcan
-
-                                        @endif
-
-                                    </div>
+                        <a
+                            href="{{ route('offres.technicien.profil', $offre) }}"
+                            class="rounded-lg border border-sky-200 px-3 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50"
+                        >
+                            Voir le profil
+                        </a>
 
 
-                                    {{-- Message --}}
+                        {{-- Accepter --}}
 
-                                    @if ($offre->message)
+                        <form
+                            method="POST"
+                            action="{{ route('offres.accept', $offre) }}"
+                        >
 
-                                        <p class="mt-4 text-sm leading-6 text-slate-600">
-                                            {{ $offre->message }}
-                                        </p>
+                            @csrf
+                            @method('PUT')
 
-                                    @endif
+                            <button
+                                type="submit"
+                                onclick="return confirm('Voulez-vous accepter cette offre ?')"
+                                class="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-700"
+                            >
+                                Accepter l'offre
+                            </button>
 
-
-                                    {{-- Pré-diagnostic --}}
-
-                                    @if ($offre->pre_diagnostic)
-
-                                        <div class="mt-4 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
-
-                                            <span class="font-semibold text-slate-700">
-                                                Pré-diagnostic :
-                                            </span>
-
-                                            {{ $offre->pre_diagnostic }}
-
-                                        </div>
-
-                                    @endif
+                        </form>
 
 
-                                    {{-- Actions technicien --}}
+                        {{-- Refuser --}}
 
-                                    @if ($isTechnicien)
+                        <form
+                            method="POST"
+                            action="{{ route('offres.refuse', $offre) }}"
+                        >
 
-                                        @can('update', $offre)
+                            @csrf
+                            @method('PUT')
 
-                                            <div class="mt-5 flex flex-wrap gap-3 border-t border-slate-200 pt-4">
+                            <button
+                                type="submit"
+                                onclick="return confirm('Voulez-vous refuser cette offre ?')"
+                                class="rounded-lg bg-rose-600 px-3 py-2 text-sm font-bold text-white hover:bg-rose-700"
+                            >
+                                Refuser l'offre
+                            </button>
 
-                                                <a
-                                                    href="{{ route('offres.edit', $offre) }}"
-                                                    class="rounded-lg border border-sky-200 px-3 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50"
-                                                >
-                                                    Modifier mon offre
-                                                </a>
+                        </form>
+
+                    </div>
+
+                @endcan
+
+            @endif
+
+        </div>
 
 
-                                                @can('delete', $offre)
+        {{-- Message --}}
 
-                                                    <form
-                                                        method="POST"
-                                                        action="{{ route('offres.destroy', $offre) }}"
-                                                        onsubmit="return confirm('Voulez-vous annuler cette offre ?')"
-                                                    >
+        @if ($offre->message)
 
-                                                        @csrf
-                                                        @method('DELETE')
+            <p class="mt-4 text-sm leading-6 text-slate-600">
+                {{ $offre->message }}
+            </p>
 
-                                                        <button
-                                                            type="submit"
-                                                            class="rounded-lg border border-indigo-200 px-3 py-2 text-sm font-semibold text-indigo-700 hover:bg-indigo-50"
-                                                        >
-                                                            Annuler mon offre
-                                                        </button>
+        @endif
 
-                                                    </form>
 
-                                                @endcan
+        {{-- Pré-diagnostic --}}
 
-                                            </div>
+        @if ($offre->pre_diagnostic)
 
-                                        @endcan
+            <div class="mt-4 rounded-lg bg-slate-50 p-3 text-sm text-slate-600">
 
-                                    @endif
+                <span class="font-semibold text-slate-700">
+                    Pré-diagnostic :
+                </span>
 
-                                </div>
+                {{ $offre->pre_diagnostic }}
 
-                            @empty
+            </div>
 
-                                <p class="rounded-xl bg-slate-50 px-4 py-5 text-sm text-slate-500">
-                                    Aucune offre n'a encore été envoyée.
-                                </p>
+        @endif
 
-                            @endforelse
 
+        {{-- Actions technicien --}}
+
+        @if ($isTechnicien)
+
+            @can('update', $offre)
+
+                <div class="mt-5 flex flex-wrap gap-3 border-t border-slate-200 pt-4">
+
+                    <a
+                        href="{{ route('offres.edit', $offre) }}"
+                        class="rounded-lg border border-sky-200 px-3 py-2 text-sm font-semibold text-sky-700 hover:bg-sky-50"
+                    >
+                        Modifier mon offre
+                    </a>
+
+
+                    @can('delete', $offre)
+
+                        <form
+                            method="POST"
+                            action="{{ route('offres.destroy', $offre) }}"
+                            onsubmit="return confirm('Voulez-vous annuler cette offre ?')"
+                        >
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="submit"
+                                class="rounded-lg border border-indigo-200 px-3 py-2 text-sm font-semibold text-indigo-700 hover:bg-indigo-50"
+                            >
+                                Annuler mon offre
+                            </button>
+
+                        </form>
+
+                    @endcan
+
+                </div>
+
+            @endcan
+
+        @endif
+
+    </div>
+
+@empty
+
+    <p class="rounded-xl bg-slate-50 px-4 py-5 text-sm text-slate-500">
+        Aucune offre n'a encore été envoyée.
+    </p>
+
+@endforelse
                         </div>
 
                     </section>

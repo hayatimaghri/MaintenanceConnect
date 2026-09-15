@@ -62,6 +62,12 @@ Route::put('technicien/experiences/{experience}', [ExperienceController::class, 
 Route::delete('technicien/experiences/{experience}', [ExperienceController::class, 'destroy'])
     ->name('experiences.destroy');
 
+
+    Route::get(
+    'offres/{offre}/technicien',
+    [OffreController::class, 'profilTechnicien']
+)->name('offres.technicien.profil');
+
     Route::post('missions/{mission}/evaluations', [EvaluationController::class, 'store'])
     ->name('evaluations.store');
 

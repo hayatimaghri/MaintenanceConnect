@@ -6,6 +6,7 @@ use App\Http\Requests\OffreRequest;
 use App\Http\Requests\OffreUpdateRequest;
 use App\Models\Offre;
 use App\Models\Mission;
+use App\Models\User;
 use App\Events\NewOfferReceived;
 use App\Events\OfferAccepted;
 use App\Events\OfferRefused;
@@ -197,5 +198,42 @@ if ($mission->statut !== 'Publiée') {
     return redirect()
         ->route('missions.show', $offre->mission->id_mission)
         ->with('status', 'Offre refusée avec succès.');
+}
+
+/**
+ * Afficher le profil d'un technicien ayant envoyé une offre
+ */
+public function profilTechnicien(Offre $offre): View
+{
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+
+    $user = auth()->user();
+
+    // Seule l'entreprise propriétaire de la mission peut voir le profil
+    if (
+        $user->role !== 'Entreprise' ||
+        $offre->mission->id_utilisateur !== $user->id
+    ) {
+        abort(403);
+    }
+
+    // Vérifier que l'offre appartient bien à un technicien
+    if ($offre->user->role !== 'Technicien') {
+        abort(404);
+    }
+
+    $technicien = $offre->user;
+
+    $technicien->load([
+        'competences',
+        'experiences'
+    ]);
+
+    return view(
+        'entreprise.techniciens.profil',
+        compact('technicien', 'offre')
+    );
 }
 }
