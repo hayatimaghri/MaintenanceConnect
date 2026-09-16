@@ -291,308 +291,264 @@
             </div>
 
 
-            <!-- INDICATEUR BAS -->
-
-            <div class="absolute bottom-7 left-1/2
-                        hidden -translate-x-1/2
-                        sm:flex flex-col items-center gap-2
-                        text-white/70">
-
-                <span class="text-xs font-medium">
-                    Découvrir
-                </span>
-
-                <svg class="h-5 w-5"
-                     fill="none"
-                     stroke="currentColor"
-                     viewBox="0 0 24 24">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M19 9l-7 7-7-7"/>
-
-                </svg>
-
+    
             </div>
 
         </section>
 
+<!-- =====================================================
+     STATISTIQUES
+====================================================== -->
 
-        <!-- =====================================================
-             STATISTIQUES
-        ====================================================== -->
+<section class="relative z-20 -mt-20 bg-transparent">
 
-        <section class="relative bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
-            <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
-                            gap-4
-                            -mt-6
-                            relative z-20">
+            <!-- MISSIONS -->
 
-                    <!-- MISSIONS -->
+            <div class="group rounded-2xl
+                        border border-slate-200
+                        bg-white
+                        p-6
+                        shadow-xl
+                        shadow-slate-900/10
+                        transition
+                        hover:-translate-y-1
+                        hover:shadow-2xl">
 
-                    <div class="group rounded-2xl
-                                border border-slate-200
-                                bg-white
-                                p-6
-                                shadow-lg
-                                shadow-slate-200/40
-                                transition
-                                hover:-translate-y-1
-                                hover:shadow-xl">
+                <div class="flex items-center justify-between">
 
-                        <div class="flex items-center justify-between">
+                    <div class="flex h-11 w-11 items-center justify-center
+                                rounded-xl
+                                bg-[#e0f2fe]
+                                text-[#075985]">
 
-                            <div class="flex h-11 w-11 items-center justify-center
-                                        rounded-xl
-                                        bg-[#e0f2fe]
-                                        text-[#075985]">
-
-                                <svg class="h-5 w-5"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     viewBox="0 0 24 24">
-
-                                    <path stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          stroke-width="1.8"
-                                          d="M9 12h6m-6 4h4M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"/>
-
-                                </svg>
-
-                            </div>
-
-                            <span class="text-xs font-semibold
-                                         text-green-600
-                                         bg-green-50
-                                         rounded-full
-                                         px-2.5 py-1">
-
-                                Actives
-
-                            </span>
-
-                        </div>
-
-                        <div class="mt-5">
-
-                            <p class="text-3xl font-extrabold tracking-tight
-                                      text-[#075985]">
-
-                                +1200
-
-                            </p>
-
-                            <p class="mt-1 text-sm font-medium text-slate-500">
-
-                                Missions publiées
-
-                            </p>
-
-                        </div>
+                        <svg
+                            class="h-5 w-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.8"
+                                d="M9 12h6m-6 4h4M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z"
+                            />
+                        </svg>
 
                     </div>
 
+                    <span class="rounded-full
+                                 bg-green-50
+                                 px-2.5 py-1
+                                 text-xs font-semibold
+                                 text-green-600">
 
-                    <!-- TECHNICIENS -->
+                        Actives
 
-                    <div class="group rounded-2xl
-                                border border-slate-200
-                                bg-white
-                                p-6
-                                shadow-lg
-                                shadow-slate-200/40
-                                transition
-                                hover:-translate-y-1
-                                hover:shadow-xl">
+                    </span>
 
-                        <div class="flex items-center justify-between">
+                </div>
 
-                            <div class="flex h-11 w-11 items-center justify-center
-                                        rounded-xl
-                                        bg-[#e0f2fe]
-                                        text-[#075985]">
+                <div class="mt-5">
 
-                                <svg class="h-5 w-5"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     viewBox="0 0 24 24">
+                    <p class="text-3xl font-extrabold tracking-tight text-[#075985]">
+                        +1200
+                    </p>
 
-                                    <path stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          stroke-width="1.8"
-                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM4 21a8 8 0 0116 0"/>
-
-                                </svg>
-
-                            </div>
-
-                            <span class="text-xs font-semibold
-                                         text-green-600
-                                         bg-green-50
-                                         rounded-full
-                                         px-2.5 py-1">
-
-                                Vérifiés
-
-                            </span>
-
-                        </div>
-
-                        <div class="mt-5">
-
-                            <p class="text-3xl font-extrabold tracking-tight
-                                      text-[#075985]">
-
-                                +850
-
-                            </p>
-
-                            <p class="mt-1 text-sm font-medium text-slate-500">
-
-                                Techniciens
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- SATISFACTION -->
-
-                    <div class="group rounded-2xl
-                                border border-slate-200
-                                bg-white
-                                p-6
-                                shadow-lg
-                                shadow-slate-200/40
-                                transition
-                                hover:-translate-y-1
-                                hover:shadow-xl">
-
-                        <div class="flex items-center justify-between">
-
-                            <div class="flex h-11 w-11 items-center justify-center
-                                        rounded-xl
-                                        bg-yellow-50
-                                        text-yellow-500">
-
-                                <svg class="h-5 w-5"
-                                     fill="currentColor"
-                                     viewBox="0 0 24 24">
-
-                                    <path d="M12 2.5l2.95 5.98 6.6.96-4.78 4.66 1.13 6.58L12 17.57l-5.9 3.11 1.13-6.58-4.78-4.66 6.6-.96L12 2.5z"/>
-
-                                </svg>
-
-                            </div>
-
-                            <span class="text-xs font-semibold
-                                         text-yellow-600
-                                         bg-yellow-50
-                                         rounded-full
-                                         px-2.5 py-1">
-
-                                Excellent
-
-                            </span>
-
-                        </div>
-
-                        <div class="mt-5">
-
-                            <p class="text-3xl font-extrabold tracking-tight
-                                      text-[#075985]">
-
-                                98%
-
-                            </p>
-
-                            <p class="mt-1 text-sm font-medium text-slate-500">
-
-                                Satisfaction
-
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- RÉPONSE -->
-
-                    <div class="group rounded-2xl
-                                border border-slate-200
-                                bg-white
-                                p-6
-                                shadow-lg
-                                shadow-slate-200/40
-                                transition
-                                hover:-translate-y-1
-                                hover:shadow-xl">
-
-                        <div class="flex items-center justify-between">
-
-                            <div class="flex h-11 w-11 items-center justify-center
-                                        rounded-xl
-                                        bg-[#e0f2fe]
-                                        text-[#075985]">
-
-                                <svg class="h-5 w-5"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     viewBox="0 0 24 24">
-
-                                    <path stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          stroke-width="1.8"
-                                          d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-
-                                </svg>
-
-                            </div>
-
-                            <span class="text-xs font-semibold
-                                         text-green-600
-                                         bg-green-50
-                                         rounded-full
-                                         px-2.5 py-1">
-
-                                Rapide
-
-                            </span>
-
-                        </div>
-
-                        <div class="mt-5">
-
-                            <p class="text-3xl font-extrabold tracking-tight
-                                      text-[#075985]">
-
-                                24h
-
-                            </p>
-
-                            <p class="mt-1 text-sm font-medium text-slate-500">
-
-                                Réponse moyenne
-
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <p class="mt-1 text-sm font-medium text-slate-500">
+                        Missions publiées
+                    </p>
 
                 </div>
 
             </div>
 
-        </section>
+            <!-- TECHNICIENS -->
 
+            <div class="group rounded-2xl
+                        border border-slate-200
+                        bg-white
+                        p-6
+                        shadow-xl
+                        shadow-slate-900/10
+                        transition
+                        hover:-translate-y-1
+                        hover:shadow-2xl">
+
+                <div class="flex items-center justify-between">
+
+                    <div class="flex h-11 w-11 items-center justify-center
+                                rounded-xl
+                                bg-[#e0f2fe]
+                                text-[#075985]">
+
+                        <svg
+                            class="h-5 w-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.8"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM4 21a8 8 0 0116 0"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <span class="rounded-full
+                                 bg-green-50
+                                 px-2.5 py-1
+                                 text-xs font-semibold
+                                 text-green-600">
+
+                        Vérifiés
+
+                    </span>
+
+                </div>
+
+                <div class="mt-5">
+
+                    <p class="text-3xl font-extrabold tracking-tight text-[#075985]">
+                        +850
+                    </p>
+
+                    <p class="mt-1 text-sm font-medium text-slate-500">
+                        Techniciens
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- SATISFACTION -->
+
+            <div class="group rounded-2xl
+                        border border-slate-200
+                        bg-white
+                        p-6
+                        shadow-xl
+                        shadow-slate-900/10
+                        transition
+                        hover:-translate-y-1
+                        hover:shadow-2xl">
+
+                <div class="flex items-center justify-between">
+
+                    <div class="flex h-11 w-11 items-center justify-center
+                                rounded-xl
+                                bg-yellow-50
+                                text-yellow-500">
+
+                        <svg
+                            class="h-5 w-5"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M12 2.5l2.95 5.98 6.6.96-4.78 4.66 1.13 6.58L12 17.57l-5.9 3.11 1.13-6.58-4.78-4.66 6.6-.96L12 2.5z"/>
+                        </svg>
+
+                    </div>
+
+                    <span class="rounded-full
+                                 bg-yellow-50
+                                 px-2.5 py-1
+                                 text-xs font-semibold
+                                 text-yellow-600">
+
+                        Excellent
+
+                    </span>
+
+                </div>
+
+                <div class="mt-5">
+
+                    <p class="text-3xl font-extrabold tracking-tight text-[#075985]">
+                        98%
+                    </p>
+
+                    <p class="mt-1 text-sm font-medium text-slate-500">
+                        Satisfaction
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- RÉPONSE -->
+
+            <div class="group rounded-2xl
+                        border border-slate-200
+                        bg-white
+                        p-6
+                        shadow-xl
+                        shadow-slate-900/10
+                        transition
+                        hover:-translate-y-1
+                        hover:shadow-2xl">
+
+                <div class="flex items-center justify-between">
+
+                    <div class="flex h-11 w-11 items-center justify-center
+                                rounded-xl
+                                bg-[#e0f2fe]
+                                text-[#075985]">
+
+                        <svg
+                            class="h-5 w-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.8"
+                                d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+
+                    </div>
+
+                    <span class="rounded-full
+                                 bg-green-50
+                                 px-2.5 py-1
+                                 text-xs font-semibold
+                                 text-green-600">
+
+                        Rapide
+
+                    </span>
+
+                </div>
+
+                <div class="mt-5">
+
+                    <p class="text-3xl font-extrabold tracking-tight text-[#075985]">
+                        24h
+                    </p>
+
+                    <p class="mt-1 text-sm font-medium text-slate-500">
+                        Réponse moyenne
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
         <!-- =====================================================
              COMMENT ÇA MARCHE

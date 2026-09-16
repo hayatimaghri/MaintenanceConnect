@@ -335,32 +335,32 @@
 
                     <div class="grid gap-4 sm:grid-cols-3">
 
-                        <div class="mc-panel p-5">
-                            <p class="text-xs font-bold uppercase tracking-wide text-slate-400">
+                        <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.05)]">
+                            <p class="text-sm font-medium text-slate-500">
                                 Mes missions
                             </p>
 
-                            <p class="mt-3 text-3xl font-extrabold text-slate-950">
+                            <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
                                 {{ $nombreMissions }}
                             </p>
                         </div>
 
-                        <div class="mc-panel p-5">
-                            <p class="text-xs font-bold uppercase tracking-wide text-slate-400">
+                        <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.05)]">
+                            <p class="text-sm font-medium text-slate-500">
                                 Missions actives
                             </p>
 
-                            <p class="mt-3 text-3xl font-extrabold text-slate-950">
+                            <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
                                 {{ $missionsActives }}
                             </p>
                         </div>
 
-                        <div class="mc-panel p-5">
-                            <p class="text-xs font-bold uppercase tracking-wide text-slate-400">
+                        <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-[0_1px_2px_rgba(15,23,42,0.05)]">
+                            <p class="text-sm font-medium text-slate-500">
                                 Offres reçues
                             </p>
 
-                            <p class="mt-3 text-3xl font-extrabold text-slate-950">
+                            <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">
                                 {{ $nombreOffres }}
                             </p>
                         </div>
