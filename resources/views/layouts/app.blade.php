@@ -130,8 +130,20 @@
                                         style="display: none;"
                                     >
 
-                                        <div class="border-b border-slate-100 px-4 py-3 text-sm font-bold text-slate-800">
-                                            Notifications
+                                        <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+                                            <p class="text-sm font-bold text-slate-800">
+                                                Notifications
+                                            </p>
+
+                                            @if ($unreadCount > 0)
+                                                <span class="rounded-full bg-red-100 px-2.5 py-1 text-xs font-bold text-red-600">
+                                                    {{ $unreadCount }} non lue{{ $unreadCount > 1 ? 's' : '' }}
+                                                </span>
+                                            @else
+                                                <span class="rounded-full bg-green-100 px-2.5 py-1 text-xs font-bold text-green-600">
+                                                    Tout est lu
+                                                </span>
+                                            @endif
                                         </div>
 
                                         <div class="max-h-80 overflow-y-auto">
@@ -157,22 +169,88 @@
                                                         class="w-full border-b border-slate-100 px-4 py-3 text-left transition {{ $isRead ? 'bg-white hover:bg-slate-50' : 'bg-sky-50 hover:bg-sky-100' }}"
                                                     >
 
-                                                        <p class="text-sm font-semibold text-slate-800">
-                                                            {{ $notification->message }}
-                                                        </p>
+                                                        <div class="flex items-start gap-3">
 
-                                                        <p class="mt-1 text-xs text-slate-400">
-                                                            {{ \Carbon\Carbon::parse($notification->date_notification)->diffForHumans() }}
-                                                        </p>
+                                                            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full {{ $isRead ? 'bg-slate-100 text-slate-400' : 'bg-sky-100 text-sky-600' }}">
+
+                                                                @if ($notification->type === 'nouvelle_offre')
+                                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                                    </svg>
+                                                                @elseif ($notification->type === 'offre_acceptee')
+                                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622C17.176 19.29 21 14.591 21 9c0-.674-.055-1.335-.16-1.976z" />
+                                                                    </svg>
+                                                                @elseif ($notification->type === 'offre_refusee')
+                                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                                    </svg>
+                                                                @else
+                                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                                                    </svg>
+                                                                @endif
+
+                                                            </span>
+
+                                                            <div class="min-w-0 flex-1">
+
+                                                                <p class="text-[11px] font-bold uppercase tracking-wide {{ $isRead ? 'text-slate-400' : 'text-sky-600' }}">
+                                                                    @if ($notification->type === 'nouvelle_offre')
+                                                                        Nouvelle offre
+                                                                    @elseif ($notification->type === 'offre_acceptee')
+                                                                        Offre acceptée
+                                                                    @elseif ($notification->type === 'offre_refusee')
+                                                                        Offre refusée
+                                                                    @else
+                                                                        Notification
+                                                                    @endif
+                                                                </p>
+
+                                                                <p class="mt-0.5 text-sm leading-5 {{ $isRead ? 'font-medium text-slate-700' : 'font-bold text-sky-900' }}">
+                                                                    {{ $notification->message }}
+                                                                </p>
+
+                                                                <div class="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+                                                                    <p class="text-xs text-slate-400">
+                                                                        {{ \Carbon\Carbon::parse($notification->date_notification)->diffForHumans() }}
+                                                                    </p>
+
+                                                                    <span class="text-[11px] font-semibold {{ $isRead ? 'text-slate-400' : 'text-sky-600' }}">
+                                                                        @if ($isRead)
+                                                                            Lue
+                                                                        @else
+                                                                            Marquer comme lu
+                                                                        @endif
+                                                                    </span>
+                                                                </div>
+
+                                                            </div>
+
+                                                            @if (!$isRead)
+                                                                <span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-sky-600"></span>
+                                                            @endif
+
+                                                        </div>
 
                                                     </button>
                                                 </form>
 
                                             @empty
 
-                                                <p class="px-4 py-6 text-center text-sm text-slate-500">
-                                                    Aucune notification
-                                                </p>
+                                                <div class="px-4 py-10 text-center">
+                                                    <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
+                                                        <svg class="h-6 w-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                                        </svg>
+                                                    </div>
+                                                    <p class="text-sm font-semibold text-slate-600">
+                                                        Aucune notification
+                                                    </p>
+                                                    <p class="mt-1 text-xs text-slate-400">
+                                                        Vous êtes à jour.
+                                                    </p>
+                                                </div>
 
                                             @endforelse
 
