@@ -4,19 +4,13 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Event;
+
 
 use App\Models\Mission;
 use App\Models\Offre;
 use App\Policies\MissionPolicy;
 use App\Policies\OffrePolicy;
-use App\Events\OfferAccepted;
-use App\Listeners\CreateOfferAcceptedNotification;
-use App\Events\NewOfferReceived;
-use App\Listeners\CreateOfferNotification;
 
-use App\Events\OfferRefused;
-use App\Listeners\CreateOfferRefusedNotification;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -42,20 +36,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('isEntreprise', fn($user) => $user->role === 'Entreprise');
         Gate::define('isTechnicien', fn($user) => $user->role === 'Technicien');
 
-        // Events / Listeners
-        Event::listen(
-            OfferAccepted::class,
-            CreateOfferAcceptedNotification::class
-        );
-
-        Event::listen(
-            NewOfferReceived::class,
-            CreateOfferNotification::class
-        );
-
-        Event::listen(
-    OfferRefused::class,
-    CreateOfferRefusedNotification::class
-);
+        
     }
 }
